@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HeladosService } from '../../services/helados.service';
 
 @Component({
   selector: 'app-productos',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductosComponent implements OnInit {
 
-  constructor() { }
+  constructor(private heladosservice: HeladosService) { }
 
   ngOnInit(): void {
+    this.heladosservice.obtenerColeccionesFb().subscribe(items=>console.log(items)
+    )
   }
 
 }
