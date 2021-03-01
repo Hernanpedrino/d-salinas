@@ -13,7 +13,10 @@ const routes: Routes = [
     { path: 'productos-sin-tacc', component: ProductosComponent },
     { path: 'carrito', component: CarritoComponent },
     { path: 'confirmar-pedido', component: ContactoComponent },
-    { path: 'detalles/:id', component: DetallesComponent },
+    { path: 'detalles/baldes/:id', component: DetallesComponent },
+    { path: 'detalles/postres-helados/:id', component: DetallesComponent },
+    { path: 'detalles/productos-sin-tacc/:id', component: DetallesComponent },
+    { path: 'detalles/golosinas-heladas/:id', component: DetallesComponent },
 ];
 
 @NgModule({

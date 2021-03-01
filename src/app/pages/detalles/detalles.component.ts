@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HeladosService } from 'src/app/services/helados.service';
 
 @Component({
   selector: 'app-detalles',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetallesComponent implements OnInit {
 
-  constructor() { }
+  
+  constructor(private heladosservice: HeladosService,
+              private activroute: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
+    const id = this.activroute.snapshot.paramMap.get('id');
+    const href = this.router.url
+    console.log(id,href);
+    // this.heladosservice.obtenerDocumentoId('id')
   }
 
 }

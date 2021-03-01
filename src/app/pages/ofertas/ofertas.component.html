@@ -1,5 +1,4 @@
 <hr>
-
 <!-- <div class="alert alert-primary text-center" role="alert">
   En este momento no hay ofertas disponibles
 </div> -->
@@ -10,7 +9,7 @@
 
 <div class="card-group mb-2">
     <div class="card text-center"*ngFor="let item of ofertasbaldes">
-      <a [routerLink]= "['/detalles', item.id]"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
+      <a [routerLink]= "['/detalles/baldes', item.id]"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
       <div class="card-body">
         <h5 class="card-title">{{item.titulo}}</h5>
         <p class="card-text">{{item.descripcion}}</p>
@@ -35,7 +34,7 @@
       </div>
     </div>
     <div class="card text-center"*ngFor="let item of ofertaspostres">
-      <a routerLink = "/detalles/56345"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
+      <a [routerLink]= "['/detalles/postres-helados', item.id]"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
       <div class="card-body">
         <h5 class="card-title">{{item.titulo}}</h5>
         <p class="card-text">{{item.descripcion}}</p>
@@ -60,7 +59,7 @@
       </div>
     </div>
     <div class="card text-center"*ngFor="let item of ofertastacc">
-      <a routerLink = "/detalles/56345"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
+      <a [routerLink]= "['/detalles/productos-sin-tacc', item.id]"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
       <div class="card-body">
         <h5 class="card-title">{{item.titulo}}</h5>
         <p class="card-text">{{item.descripcion}}</p>
@@ -85,7 +84,7 @@
       </div>
     </div> 
     <div class="card text-center"*ngFor="let item of ofertasgolosinas">
-      <a routerLink = "/detalles/56345"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
+      <a [routerLink]= "['/detalles/golosinas-heladas', item.id]"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
       <div class="card-body">
         <h5 class="card-title">{{item.titulo}}</h5>
         <p class="card-text">{{item.descripcion}}</p>
