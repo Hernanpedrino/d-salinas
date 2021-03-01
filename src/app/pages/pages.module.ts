@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { DetallesComponent } from './detalles/detalles.component';
 import { OfertasComponent } from './ofertas/ofertas.component';
 import { ProductosComponent } from './productos/productos.component';
+import { ContactoComponent } from './contacto/contacto.component';
 
 
 
@@ -18,7 +19,7 @@ import { ProductosComponent } from './productos/productos.component';
     HomeComponent, 
     DetallesComponent, 
     OfertasComponent, 
-    ProductosComponent
+    ProductosComponent, ContactoComponent
   ],
   imports: [
     CommonModule,

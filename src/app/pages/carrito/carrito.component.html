@@ -1,1 +1,57 @@
-<p>carrito works!</p>
+<div class="container">
+    <table class="table table-hover mt-3">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Precio  unitario</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Sub-total</th>
+            <th scope="col">Quitar producto</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Balde 2 litros</td>
+            <td>123.56</td>
+            <td>3</td>
+            <td>1234.00</td>
+            <td><button class="btn btn-danger"><i class="far fa-trash-alt fa-lg"></i></button></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Balde 2 litros</td>
+            <td>123.56</td>
+            <td>3</td>
+            <td>1234.00</td>
+            <td><button class="btn btn-danger"><i class="far fa-trash-alt fa-lg"></i></button></td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Balde 2 litros</td>
+            <td>123.56</td>
+            <td>3</td>
+            <td>1234.00</td>
+            <td><button class="btn btn-danger"><i class="far fa-trash-alt fa-lg"></i></button></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th scope="row">Total del pedido</th>
+            <td colspan="3"></td>
+            <td>$2343.50</td>
+            <td><a routerLink="/confirmar-pedido" class="btn btn-success">Confirmar Pedido <i class="fas fa-check"></i></a></td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <div class="alert alert-info text-center" role="alert">
+        Aca van todas las intrucciones para realizar el pedido.
+        Forma y dia de envio. Forma de pago. Etc.
+    </div>
+
+    <div class="d-grid gap-2 col-6 mx-auto mt-3">
+        <a routerLink="" class="btn btn-primary" type="button">Continuar Comprando  <i class="fas fa-cart-plus"></i></a>
+    </div>
+</div>

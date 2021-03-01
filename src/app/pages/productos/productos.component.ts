@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeladosService } from '../../services/helados.service';
+import { Helados } from 'src/app/models/helados.model';
+
 
 @Component({
   selector: 'app-productos',
@@ -8,11 +10,22 @@ import { HeladosService } from '../../services/helados.service';
 })
 export class ProductosComponent implements OnInit {
 
+  items:Helados[]=[];
   constructor(private heladosservice: HeladosService) { }
 
   ngOnInit(): void {
-    this.heladosservice.obtenerColeccionesFb().subscribe(items=>console.log(items)
-    )
+    this.heladosservice.obtenerColeccionesFb().subscribe(resp=>{
+      this.items = resp
+      console.log(resp)
+    })
   }
-
+  // agregarAlCarrito(){
+  //   Swal.fire({
+  //     position: 'top-end',
+  //     icon: 'success',
+  //     title: 'Your work has been saved',
+  //     showConfirmButton: false,
+  //     timer: 1500
+  //   })
+  // }
 }

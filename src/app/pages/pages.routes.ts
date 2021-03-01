@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ProductosComponent } from './productos/productos.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { DetallesComponent } from './detalles/detalles.component';
+import { ContactoComponent } from './contacto/contacto.component';
 
 const routes: Routes = [ 
     { path: 'baldes', component: ProductosComponent },
@@ -11,6 +12,7 @@ const routes: Routes = [
     { path: 'combos', component: ProductosComponent },
     { path: 'productos-sin-tacc', component: ProductosComponent },
     { path: 'carrito', component: CarritoComponent },
+    { path: 'confirmar-pedido', component: ContactoComponent },
     { path: 'detalles/:id', component: DetallesComponent },
 ];
 
