@@ -16,7 +16,7 @@ export class ProductosComponent implements OnInit {
   ngOnInit(): void {
     this.heladosservice.obtenerColeccionesFb().subscribe(resp=>{
       this.items = resp
-      console.log(resp)
+      
     })
   }
   // agregarAlCarrito(){

@@ -1,14 +1,14 @@
 <div class="row mt-2">
 
     <div class="col-4">
-      <img src="../../../assets/helados/IMG-20210204-WA0054.jpg" alt="avatar" class="img-thumbnail">
+      <img [src]="idbaldes.imagenes" alt="avatar" class="img-thumbnail">
     </div>
   
     <div class="col">
       <ul class="list-group">
-        <li class="list-group-item"> <b>Nombre: </b></li>
-        <li class="list-group-item"> <b>Descripcion del producto:</b></li>
-        <li class="list-group-item"> <b>Precio: </b></li>
+        <li class="list-group-item"> <b>Nombre: </b>{{idbaldes.titulo}}</li>
+        <li class="list-group-item"> <b>Descripcion del producto: </b> {{idbaldes.descripcion}}</li>
+        <li class="list-group-item"> <b>Precio: </b>{{idbaldes.precio | currency}}</li>
         <li class="list-group-item"> <select class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
             <option selected>Añadir al carrito:</option>
             <option value="1">1</option>
@@ -22,7 +22,7 @@
             <option value="9">9</option>
             <option value="10">10</option>
           </select></li>
-          <a routerLink = "/carrito" class="btn btn-primary">Comprar</a>
+          <a routerLink = "/carrito" class="btn btn-primary mt-3">Comprar</a>
       </ul>
 
     </div>
