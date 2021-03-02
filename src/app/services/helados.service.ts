@@ -38,7 +38,7 @@ export class HeladosService {
     .valueChanges()
   }
   obtenerDocumentoId(id:string){
-    return this.firestore.doc('´baldes/${this.id}´').get()
+     return this.firestore.collection('baldes').doc(`${id}`).get()
   }
 //TODO: Hernan tenes que hacer el metodo para obtener cada producto como esta arriba e implementaar un switch para que quede prolijo y en un solo metodo
 }

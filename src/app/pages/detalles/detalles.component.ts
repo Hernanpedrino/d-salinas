@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Helados } from 'src/app/models/helados.model';
 import { HeladosService } from 'src/app/services/helados.service';
 
 @Component({
@@ -9,16 +10,18 @@ import { HeladosService } from 'src/app/services/helados.service';
 })
 export class DetallesComponent implements OnInit {
 
-  
+ 
   constructor(private heladosservice: HeladosService,
               private activroute: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit(): void {
     const id = this.activroute.snapshot.paramMap.get('id');
-    const href = this.router.url
+    const href = this.router.url;
     console.log(id,href);
-    // this.heladosservice.obtenerDocumentoId('id')
+    this.heladosservice.obtenerDocumentoId(`${id}`).subscribe(resp=>{
+      console.log(resp.data());
+    })
   }
 
 }
