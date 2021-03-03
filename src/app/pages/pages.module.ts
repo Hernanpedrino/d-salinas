@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 //Modulos personalizados
 import { SharedModule } from '../shared/shared.module';
 //Componentes
@@ -24,6 +25,7 @@ import { ContactoComponent } from './contacto/contacto.component';
   imports: [
     CommonModule,
     RouterModule,
+    ReactiveFormsModule,
     SharedModule
   ]
 })

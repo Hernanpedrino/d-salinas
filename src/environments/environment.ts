@@ -15,7 +15,7 @@ export const environment = {
   },
   emailJs:{
     serviceId: 'service_stts5ed',
-    templateId: 'template_ifu8tw6',
+    templateId: 'template_m4y8sya',
     userId: 'user_StYp1VuV1vfLde44fjqVJ',
     accessToken: '2e5da7ac3b38e816a773e1790840fb68',
   },

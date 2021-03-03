@@ -17,8 +17,8 @@ sendEmail(templateParams) {
       .then((result: EmailJSResponseStatus) => {
         Swal.fire({
           icon: 'success',
-          title: 'Genial!',
-          text: 'Tu consulta fue enviada y te respondere a la brevedad.',
+          title: 'Muchas gracias por tu compra!!!',
+          text: 'Tu pedido fue enviado con exito. Nos pondremos en contacto a la brevedad.',
         })
       }, (error) => {
         Swal.fire({

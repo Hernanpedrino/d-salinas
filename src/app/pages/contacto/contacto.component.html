@@ -1,29 +1,29 @@
 <div class="container mt-3">
-    <form id="contacto">
+    <form [formGroup]="contacto" (ngSubmit)="sendEmail()" id="contacto">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label>Nombre</label>
-            <input type="text" class="form-control" id="">
+            <input type="text" class="form-control" formControlName="nombre" id="">
           </div>
           <div class="form-group col-md-6">
             <label>Apellido</label>
-            <input type="text" class="form-control" id="" >
+            <input type="text" class="form-control" formControlName="apellido" id="" >
           </div>
         </div>
         <div class="form-row">
         <div class="form-group col-md-6">
             <label>Email</label>
-            <input type="email" class="form-control" id="" >
+            <input type="email" class="form-control" formControlName="email" id="" >
         </div>
         <div class="form-group col-md-6">
             <label>Telefono</label>
-            <input type="text" class="form-control" id="" >
+            <input type="text" class="form-control" formControlName="telefono" id="" >
         </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label>Tu pedido:</label>
-                <textarea class="form-control" aria-label="With textarea"></textarea>
+                <textarea class="form-control"  formControlName="pedido" aria-label="With textarea"></textarea>
             </div>
             </div>
         <button type="submit" class="btn btn-success mt-3">Enviar Pedido    <i class="far fa-paper-plane"></i></button>
