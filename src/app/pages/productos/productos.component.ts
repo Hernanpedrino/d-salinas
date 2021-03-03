@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeladosService } from '../../services/helados.service';
 import { Helados } from 'src/app/models/helados.model';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -19,13 +20,13 @@ export class ProductosComponent implements OnInit {
       
     })
   }
-  // agregarAlCarrito(){
-  //   Swal.fire({
-  //     position: 'top-end',
-  //     icon: 'success',
-  //     title: 'Your work has been saved',
-  //     showConfirmButton: false,
-  //     timer: 1500
-  //   })
-  // }
+  agregarAlCarrito(){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Producto agregado al carrito',
+      showConfirmButton: false,
+      timer: 2000
+    })
+  }
 }

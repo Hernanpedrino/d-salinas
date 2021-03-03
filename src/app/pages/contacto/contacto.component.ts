@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+//import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+// import { EmailService } from '../../services/email.service';
 
 @Component({
   selector: 'app-contacto',
@@ -11,5 +13,5 @@ export class ContactoComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
 }

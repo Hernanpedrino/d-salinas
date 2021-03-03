@@ -9,10 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   providedIn: 'root'
 })
 export class HeladosService {
-
-  
   private href: string = '';
-  
   constructor(private firestore: AngularFirestore,
               private router: Router) { }
   
@@ -37,12 +34,10 @@ export class HeladosService {
     return this.firestore.collection<Helados>('productos-sin-tacc', ref => ref.where('oferta','==', true))
     .valueChanges()
   }
-  // obtenerBaldesIdFb(id:string){
-  //   return this.firestore.collection<Helados>('baldes', ref => ref.where('id','==', `${id}`))
-  //   .valueChanges()
-  // }
+  
   obtenerDocumentoId(id:string){
-     return this.firestore.collection<Helados>('baldes').doc(`${id}`).get()
+    return this.firestore.collection<Helados>('baldes').doc(`${id}`).get()
   }
+  
 //TODO: Hernan tenes que hacer el metodo para obtener cada producto como esta arriba e implementaar un switch para que quede prolijo y en un solo metodo
 }
