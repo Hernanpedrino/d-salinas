@@ -22,16 +22,17 @@ export class ContactoComponent implements OnInit {
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       telefono: ['', Validators.required],
+      direccion: ['', Validators.required],
       pedido: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
     });
 
   }
   sendEmail(){
-    // const templateParams = this.contacto.value
-    // this.emailservice.sendEmail(templateParams);
-    this.contacto.reset();
+    const templateParams = this.contacto.value
+    this.emailservice.sendEmail(templateParams);
     console.log(this.contacto.value);
+    this.contacto.reset();
     
   }
 }

@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Helados } from 'src/app/models/helados.model';
 import { HeladosService } from 'src/app/services/helados.service';
 
 @Component({
@@ -10,6 +9,7 @@ import { HeladosService } from 'src/app/services/helados.service';
 })
 export class DetallesComponent implements OnInit {
 
+  @Output() itemAlCarrito:EventEmitter<{}>
   public idbaldes:any={};
   constructor(private heladosservice: HeladosService,
               private activroute: ActivatedRoute,
@@ -21,12 +21,13 @@ export class DetallesComponent implements OnInit {
     console.log(id,href);
     this.heladosservice.obtenerDocumentoId(`${id}`).subscribe(
       resp=>{
-        console.log(resp.data(), 'Respuesta del documento de fb con id');
         this.idbaldes = resp.data()
-        console.log(this.idbaldes, 'Respuesta con los datos cargados');
-        
       }
     )
   }
-
+  agregarAlCarrito(){
+    this.itemAlCarrito.emit(this.idbaldes);
+    console.log(this.idbaldes);
+  }
+  
 }
