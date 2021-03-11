@@ -30,7 +30,7 @@
                 <textarea class="form-control"  formControlName="pedido" aria-label="With textarea"></textarea>
             </div>
             </div>
-        <button type="submit" class="btn btn-success mt-3">Enviar Pedido    <i class="far fa-paper-plane"></i></button>
+        <button type="submit" class="btn btn-success mt-3"[disabled]="contacto.invalid">Enviar Pedido    <i class="far fa-paper-plane"></i></button>
     </form>
 </div>
 
