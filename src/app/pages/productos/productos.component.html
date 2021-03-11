@@ -1,4 +1,7 @@
-<div class="row row-cols-1 row-cols-md-5 g-5 mt-2">
+<div class="alert alert-primary text-center mt-2" *ngIf="cargando" role="alert">
+  <i class="fas fa-spinner fa-10x fa-spin"></i>
+</div>
+<div class="row row-cols-1 row-cols-md-5 g-5 mt-2" *ngIf="!cargando">
     <div class="card my-3" *ngFor="let item of items">
       <a [routerLink]= "['/detalles/', tipoDeProd, item.id, ]"><img [src]="item.imagenes[0]" class="card-img-top mt-1" alt="..."></a>
       <div class="card-body">

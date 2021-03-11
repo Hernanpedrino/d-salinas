@@ -14,6 +14,7 @@ export class ProductosComponent implements OnInit {
 
   public items:Helados[]=[];
   public tipoDeProd:string;
+  public cargando:boolean = true;
   constructor(private heladosservice: HeladosService,
               private router: Router) { 
       this.router.events
@@ -28,7 +29,8 @@ export class ProductosComponent implements OnInit {
 
   ngOnInit(): void {
     this.heladosservice.obtenerColeccionesFb().subscribe(resp=>{
-      this.items = resp
+      this.items = resp;
+      this.cargando = false;
     })
   }
   agregarAlCarrito(){
