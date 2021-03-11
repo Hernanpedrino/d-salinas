@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HeladosService } from 'src/app/services/helados.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalles',
@@ -8,26 +9,27 @@ import { HeladosService } from 'src/app/services/helados.service';
   styleUrls: ['./detalles.component.css']
 })
 export class DetallesComponent implements OnInit {
-
-  @Output() itemAlCarrito:EventEmitter<{}>
-  public idbaldes:any={};
+  idbaldes:any={};
+  public cargando:boolean = true;
   constructor(private heladosservice: HeladosService,
-              private activroute: ActivatedRoute,
-              private router: Router) {  }
+              private activroute: ActivatedRoute) {  }
 
   ngOnInit(): void {
     const id = this.activroute.snapshot.paramMap.get('id');
-    const href = this.router.url;
-    console.log(id,href);
     this.heladosservice.obtenerDocumentoId(`${id}`).subscribe(
-      resp=>{
+      resp =>{
         this.idbaldes = resp.data()
-      }
-    )
+        this.cargando = false;
+    })
   }
   agregarAlCarrito(){
-    this.itemAlCarrito.emit(this.idbaldes);
-    console.log(this.idbaldes);
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Producto agregado al carrito',
+      showConfirmButton: false,
+      timer: 2000
+    })
   }
   
 }

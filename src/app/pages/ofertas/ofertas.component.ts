@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { Helados } from 'src/app/models/helados.model';
 import { HeladosService } from 'src/app/services/helados.service';
-import Swal from 'sweetalert2';
-
 
 @Component({
   selector: 'app-ofertas',
@@ -12,6 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class OfertasComponent implements OnInit {
 
+  cargando: boolean = true;
   ofertasbaldes:Helados[]=[];
   ofertaspostres:Helados[]=[];
   ofertasgolosinas:Helados[]=[];
@@ -20,7 +19,6 @@ export class OfertasComponent implements OnInit {
   constructor(private heladosservice: HeladosService) { }
   
   ngOnInit(): void {
-    
     combineLatest([
       this.heladosservice.obtenerOfertasBaldesFb(),
       this.heladosservice.obtenerOfertasPostresFb(),
@@ -33,18 +31,8 @@ export class OfertasComponent implements OnInit {
       this.ofertasgolosinas = golosinas,
       this.ofertastacc = tacc
       const todaslasofertas = this.ofertasbaldes.concat(this.ofertasgolosinas,this.ofertaspostres,this.ofertastacc)
-      console.log(todaslasofertas);
-      this.todaslasofertas = todaslasofertas
+      this.todaslasofertas = todaslasofertas,
+      this.cargando = false
     })
   }
-  agregarAlCarrito(){
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: 'Producto agregado al carrito',
-      showConfirmButton: false,
-      timer: 2000
-    })
-  }
-
 }

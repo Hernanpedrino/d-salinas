@@ -2,17 +2,26 @@ import { Injectable } from '@angular/core';
 import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Helados } from '../models/helados.model';
-import { ActivatedRoute, Router } from '@angular/router';
-
+import { ActivationEnd,  Router } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeladosService {
-  private href: string = '';
+  private href: string;
+  public tipoProdHref: String;
   constructor(private firestore: AngularFirestore,
-              private router: Router) { }
-  
+              private router: Router) {
+      this.router.events
+      .pipe(
+        filter(event => event instanceof ActivationEnd),
+        map((event:any)=> event.snapshot.data)
+      )
+      .subscribe(data=>{
+        this.tipoProdHref = data.producto
+      })
+  }
   obtenerColeccionesFb(){
     this.href = this.router.url
     return this.firestore.collection<Helados>(`${this.href}`)
@@ -34,10 +43,8 @@ export class HeladosService {
     return this.firestore.collection<Helados>('productos-sin-tacc', ref => ref.where('oferta','==', true))
     .valueChanges()
   }
-  
   obtenerDocumentoId(id:string){
-    return this.firestore.collection<Helados>('baldes').doc(`${id}`).get()
+   
+    return this.firestore.collection<Helados>(`${this.tipoProdHref}`).doc(`${id}`).get()
   }
-  
-//TODO: Hernan tenes que hacer el metodo para obtener cada producto como esta arriba e implementaar un switch para que quede prolijo y en un solo metodo
 }

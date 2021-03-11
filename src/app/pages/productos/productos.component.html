@@ -1,6 +1,6 @@
 <div class="row row-cols-1 row-cols-md-5 g-5 mt-2">
     <div class="card my-3" *ngFor="let item of items">
-      <a [routerLink]= "['/detalles/baldes', item.id]"><img [src]="item.imagenes[0]" class="card-img-top mt-1" alt="..."></a>
+      <a [routerLink]= "['/detalles/', tipoDeProd, item.id, ]"><img [src]="item.imagenes[0]" class="card-img-top mt-1" alt="..."></a>
       <div class="card-body">
         <h5 class="card-title">{{ item.titulo }}</h5>
         <p class="card-text">{{ item.descripcion }}</p>
@@ -8,15 +8,7 @@
       <div class="card-footer text-center mb-2">
         <p class="card-text"><strong>{{ item.precio | currency }}</strong></p>
         <hr>
-        <select class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
-          <option selected>Añadir al carrito:</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-        <a routerLink = "/carrito" class="btn btn-primary" (click)="agregarAlCarrito()">Comprar</a>       
+        <a routerLink = "/carrito" class="btn btn-primary" (click)="agregarAlCarrito()">Ver detalles</a>       
       </div>
     </div>
 </div>

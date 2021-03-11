@@ -1,10 +1,10 @@
 <hr>
-<div class="alert alert-primary text-center" *ngIf="todaslasofertas.length === 0" role="alert">
+<div class="alert alert-primary text-center" *ngIf="todaslasofertas.length === 0 && !cargando" role="alert">
   En este momento no hay ofertas disponibles
 </div>
-<!-- <div class="alert alert-primary text-center" *ngIf="todaslasofertas" role="alert">
+<div class="alert alert-primary text-center" *ngIf="cargando" role="alert">
   <i class="fas fa-spinner fa-10x fa-spin"></i>
-</div> -->
+</div>
 <h1 class="text-center">Ofertas</h1>
 
 <div class="card-group mb-2">
@@ -17,20 +17,7 @@
       <div class="card-footer text-center">
         <p class="card-text"><strong>{{ item.precio | currency }}</strong></p>
         <hr>
-        <select class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
-          <option selected>Añadir al carrito:</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
-        <a routerLink = "/carrito" class="btn btn-primary" (click)="agregarAlCarrito()">Comprar</a>       
+        <a [routerLink]= "['/detalles/baldes', item.id]" class="btn btn-primary">Ver detalles</a>       
       </div>
     </div>
     <div class="card text-center"*ngFor="let item of ofertaspostres">
@@ -42,20 +29,7 @@
       <div class="card-footer text-center">
         <p class="card-text"><strong>{{ item.precio | currency }}</strong></p>
         <hr>
-        <select class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
-          <option selected>Añadir al carrito:</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
-        <a routerLink = "/carrito" class="btn btn-primary" (click)="agregarAlCarrito()">Comprar</a>       
+        <a [routerLink]= "['/detalles/postres-helados', item.id]" class="btn btn-primary">Ver detalles</a>       
       </div>
     </div>
     <div class="card text-center"*ngFor="let item of ofertastacc">
@@ -67,20 +41,7 @@
       <div class="card-footer text-center">
         <p class="card-text"><strong>{{ item.precio | currency }}</strong></p>
         <hr>
-        <select class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
-          <option selected>Añadir al carrito:</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
-        <a routerLink = "/carrito" class="btn btn-primary"(click)="agregarAlCarrito()">Comprar</a>       
+        <a [routerLink]= "['/detalles/productos-sin-tacc', item.id]" class="btn btn-primary">Ver detalles</a>       
       </div>
     </div> 
     <div class="card text-center"*ngFor="let item of ofertasgolosinas">
@@ -92,20 +53,7 @@
       <div class="card-footer text-center">
         <p class="card-text"><strong>{{ item.precio | currency }}</strong></p>
         <hr>
-        <select class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
-          <option selected>Añadir al carrito:</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-        </select>
-        <a routerLink = "/carrito" class="btn btn-primary" (click)="agregarAlCarrito()">Comprar</a>       
+        <a [routerLink]= "['/detalles/golosinas-heladas', item.id]" class="btn btn-primary">Ver detalles</a>       
       </div>
     </div>
 </div>
