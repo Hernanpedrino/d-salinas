@@ -29,6 +29,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Cosas Hechas:
 * Arreglada la vista de los detalles con su respectivo producto.
 * Cambiado el boton de comprar por el ver detalles para poder seleccionar los sabores.
+
 Cosas por hacer:
 * Mostrar correctamente el producto seleccionado, con su cantidad en la lista de pedidos.
 * Activar el span con la cantidad de productos activos en el carrito.
