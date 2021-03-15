@@ -5,6 +5,7 @@ export class Helados{
         public descripcion: string,
         public id: string,
         public imagenes: [string],
+        public sabores: [string],
         public precio: number,
         public oferta: boolean,
         public combo: boolean,

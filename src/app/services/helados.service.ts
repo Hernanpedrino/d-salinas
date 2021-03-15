@@ -44,7 +44,6 @@ export class HeladosService {
     .valueChanges()
   }
   obtenerDocumentoId(id:string){
-   
     return this.firestore.collection<Helados>(`${this.tipoProdHref}`).doc(`${id}`).get()
   }
 }

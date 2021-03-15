@@ -2,32 +2,46 @@
     <div class="alert alert-primary text-center" *ngIf="cargando" role="alert">
       <i class="fas fa-spinner fa-10x fa-spin"></i>
     </div>
-    <div class="col-4" *ngIf="!cargando">
-      <img [src]="idbaldes.imagenes" alt="avatar" class="img-thumbnail">
+    <div class="row">
+      <div class="col-4" *ngIf="!cargando">
+        <img [src]="idbaldes.imagenes" alt="avatar" class="img-thumbnail">
+      </div>
+      <div class="col" *ngIf="!cargando">
+        <form [formGroup]="formdet" (ngSubmit)="agregarAlCarrito(formdet)" >
+          <label for="formGroupExampleInput" class="form-label"><h3>Nombre del producto:</h3></label>
+          <input type="text" class="form-control" formControlName="nombre" placeholder="">
+          <label for="formGroupExampleInput" class="form-label mt-2"><h3>Descripcion:</h3></label>
+          <textarea class="form-control" aria-label="Descripcion" formControlName="descripcion"></textarea>
+          <label for="formGroupExampleInput" class="form-label mt-2"><h3>Precio:</h3></label>
+          <input type="text" class="form-control" placeholder="" formControlName="precio">
+          <div class="row mt-2">
+            <div class="col">
+              <select class="form-select" aria-label="Seleccione sabor" formControlName="sabor">
+                <option selected>Seleccione un sabor</option>
+                <option *ngFor="let sabor of saboresArreg" [value]="sabor">{{sabor}}</option>
+              </select>
+            </div>
+            <div class="col">
+              <select class="form-select" aria-label="Cantidad" formControlName="cantidad">
+                <option selected>Cantidad a comprar</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <button class="btn btn-primary" type="submit">Agregar al carrito  <i class="fas fa-cart-plus"></i></button>
+          </div> 
+        </form>
+      </div>
     </div>
-  
-    <div class="col" *ngIf="!cargando">
-      <ul class="list-group">
-        <li class="list-group-item"> <b>Nombre: </b>{{ idbaldes.titulo }}</li>
-        <li class="list-group-item"> <b>Descripcion del producto: </b> {{ idbaldes.descripcion }}</li>
-        <li class="list-group-item"> <b>Precio: </b>{{ idbaldes.precio | currency}}</li>
-        <li class="list-group-item"> <select class="form-select form-select-sm mb-3" aria-label=".form-select-lg example">
-            <option selected>Añadir al carrito:</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-          </select></li>
-          <a class="btn btn-primary mt-3 cursor" routerLink = "/carrito" (click)="agregarAlCarrito()">Comprar</a>
-      </ul>
-
-    </div>
-  
   </div>
-  
+  <!-- routerLink = "/carrito" Agregar al boton -->
