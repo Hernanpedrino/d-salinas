@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HeladosService } from 'src/app/services/helados.service';
 import Swal from 'sweetalert2';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-detalles',
@@ -24,18 +24,17 @@ export class DetallesComponent implements OnInit {
       resp =>{
         this.idbaldes = resp.data();
         this.saboresArreg = resp.data().sabores;
-        console.log(resp.data(), this.saboresArreg);
         this.formdet = this.fb.group({
-          nombre: [{value: `${this.idbaldes.titulo}`, disabled:true}],
-          descripcion: [{value:`${this.idbaldes.descripcion}`, disabled:true}],
-          precio: [{value: `$ ${this.idbaldes.precio}`, disabled:true}],
+          nombre: [`${this.idbaldes.titulo}`],
+          descripcion: [`${this.idbaldes.descripcion}`],
+          precio: [`$ ${this.idbaldes.precio}`],
           sabor: ['Seleccione un sabor', Validators.required],
           cantidad: ['Cantidad a comprar', Validators.required]
         });
         this.cargando = false;
     }
     );
-    
+  
   }
   agregarAlCarrito(formdet){
     if(this.formdet.controls.sabor.value === 'Seleccione un sabor' || this.formdet.controls.cantidad.value === 'Cantidad a comprar'){
@@ -51,9 +50,8 @@ export class DetallesComponent implements OnInit {
         showConfirmButton: false,
         timer: 2000
       }),
-      console.log(formdet);
-      console.log(formdet.controls.nombre.value);
+      console.log(formdet.value);
     }
   }
-  
 }
+//TODO: Implementar el ngondestroy para cancelar la suscripcion.
