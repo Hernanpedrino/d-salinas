@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { EventEmitter, Injectable } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class CarritoService {
-  itemAlCarrito$ = new Subject<any>()
+  itemAlCarrito$ = new EventEmitter<object>();
   constructor() { }
 }

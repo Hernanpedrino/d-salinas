@@ -1,6 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CarritoService } from '../../services/carrito.service';
 import { HeladosService } from 'src/app/services/helados.service';
 import Swal from 'sweetalert2';
 
@@ -16,7 +17,9 @@ export class DetallesComponent implements OnInit {
   public cargando:boolean = true;
   constructor(private heladosservice: HeladosService,
               private activroute: ActivatedRoute,
-              private fb: FormBuilder) {  }
+              private router: Router,
+              private fb: FormBuilder,
+              private carritoservice: CarritoService) {  }
 
   ngOnInit(): void {
     const id = this.activroute.snapshot.paramMap.get('id');
@@ -32,9 +35,7 @@ export class DetallesComponent implements OnInit {
           cantidad: ['Cantidad a comprar', Validators.required]
         });
         this.cargando = false;
-    }
-    );
-  
+    });
   }
   agregarAlCarrito(formdet){
     if(this.formdet.controls.sabor.value === 'Seleccione un sabor' || this.formdet.controls.cantidad.value === 'Cantidad a comprar'){
@@ -50,8 +51,9 @@ export class DetallesComponent implements OnInit {
         showConfirmButton: false,
         timer: 2000
       }),
-      console.log(formdet.value);
+      this.carritoservice.itemAlCarrito$.emit(formdet.value);
+      console.log(formdet.value, 'Objeto emitido');
+      this.router.navigate(['/carrito']);
     }
   }
 }
-//TODO: Implementar el ngondestroy para cancelar la suscripcion.
