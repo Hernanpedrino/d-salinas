@@ -33,7 +33,6 @@ Cosas Hechas:
 Cosas por hacer:
 * Mostrar correctamente el producto seleccionado, con su cantidad en la lista de pedidos.
 * Activar el span con la cantidad de productos activos en el carrito.
-* Implementar el select para los sabores en la vista de detalles.
 * Darle funcionalidad a la lista del pedido con las sumas de los productos y cantidades totales.
 * Corregir el template para enviar correctamente el correo con el pedido.
 * Preguntarle al maxi si quiere un boton de wsp bussisnes en la pagina.

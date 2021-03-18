@@ -20,7 +20,7 @@ export class HeladosService {
       )
       .subscribe(data=>{
         this.tipoProdHref = data.producto
-      })
+      });
   }
   obtenerColeccionesFb(){
     this.href = this.router.url

@@ -51,7 +51,7 @@ export class DetallesComponent implements OnInit {
         showConfirmButton: false,
         timer: 2000
       }),
-      this.carritoservice.itemAlCarrito$.emit(formdet.value);
+      this.carritoservice.almacenarItemLs(formdet.value);
       console.log(formdet.value, 'Objeto emitido');
       this.router.navigate(['/carrito']);
     }
