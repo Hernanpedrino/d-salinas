@@ -10,40 +10,40 @@ import { filter, map } from 'rxjs/operators';
 })
 export class HeladosService {
   private href: string;
-  public tipoProdHref: String;
+  public tipoProdHref: string;
   constructor(private firestore: AngularFirestore,
               private router: Router) {
       this.router.events
       .pipe(
         filter(event => event instanceof ActivationEnd),
-        map((event:any)=> event.snapshot.data)
+        map((event: any) => event.snapshot.data)
       )
-      .subscribe(data=>{
-        this.tipoProdHref = data.producto
+      .subscribe(data => {
+        this.tipoProdHref = data.producto;
       });
   }
   obtenerColeccionesFb(){
-    this.href = this.router.url
+    this.href = this.router.url;
     return this.firestore.collection<Helados>(`${this.href}`)
-    .valueChanges()
+    .valueChanges();
   }
   obtenerOfertasBaldesFb(){
-    return this.firestore.collection<Helados>('baldes', ref => ref.where('oferta','==', true))
-    .valueChanges()
+    return this.firestore.collection<Helados>('baldes', ref => ref.where('oferta', '==', true))
+    .valueChanges();
   }
   obtenerOfertasPostresFb(){
-    return this.firestore.collection<Helados>('postres-helados', ref => ref.where('oferta','==', true))
-    .valueChanges()
+    return this.firestore.collection<Helados>('postres-helados', ref => ref.where('oferta', '==', true))
+    .valueChanges();
   }
   obtenerOfertasGolosinasFb(){
-    return this.firestore.collection<Helados>('golosinas-heladas', ref => ref.where('oferta','==', true))
-    .valueChanges()
+    return this.firestore.collection<Helados>('golosinas-heladas', ref => ref.where('oferta', '==', true))
+    .valueChanges();
   }
   obtenerOfertastaccFb(){
-    return this.firestore.collection<Helados>('productos-sin-tacc', ref => ref.where('oferta','==', true))
-    .valueChanges()
+    return this.firestore.collection<Helados>('productos-sin-tacc', ref => ref.where('oferta', '==', true))
+    .valueChanges();
   }
-  obtenerDocumentoId(id:string){
-    return this.firestore.collection<Helados>(`${this.tipoProdHref}`).doc(`${id}`).get()
+  obtenerDocumentoId(id: string){
+    return this.firestore.collection<Helados>(`${this.tipoProdHref}`).doc(`${id}`).get();
   }
 }

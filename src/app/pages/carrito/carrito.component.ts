@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
+import { Pedidos } from '../../models/pedidos.models';
 
 
 @Component({
@@ -9,23 +10,15 @@ import { CarritoService } from '../../services/carrito.service';
 })
 export class CarritoComponent implements OnInit {
 
-  public arregItems = [] as any;
-  constructor() { 
-    
+  public subTotal = 0;
+  public arregItems: Pedidos[] = [];
+  subTotales = [] as any;
+  constructor(private carritoservice: CarritoService) {
   }
   ngOnInit() {
-    if (localStorage.length == 0) {
-      return
-    } else {
-      let number = localStorage.length;
-      let item = JSON.parse(localStorage.getItem(`${number}`));
-      this.arregItems.push(item);
-      console.log(this.arregItems);
-      console.log(item);
-    }
-    console.log(localStorage.length);
-    
+    this.carritoservice.obtenerPedido().subscribe((pedido: Pedidos[]) => {
+      this.arregItems = pedido;
+    });
   }
-  
 
 }

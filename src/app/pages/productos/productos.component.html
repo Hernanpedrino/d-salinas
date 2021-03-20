@@ -11,7 +11,7 @@
       <div class="card-footer text-center mb-2">
         <p class="card-text"><strong>{{ item.precio | currency }}</strong></p>
         <hr>
-        <a routerLink = "/carrito" class="btn btn-primary" (click)="agregarAlCarrito()">Ver detalles</a>       
+        <a [routerLink]= "['/detalles/', tipoDeProd, item.id, ]" class="btn btn-primary">Ver detalles</a>       
       </div>
     </div>
 </div>

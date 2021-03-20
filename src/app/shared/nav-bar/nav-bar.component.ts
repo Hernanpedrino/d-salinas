@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CarritoService } from '../../services/carrito.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,7 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor() { }
+  public badge: number;
+  constructor(public caritoservice: CarritoService) { 
+    this.caritoservice.obtenerPedido().subscribe(items => {
+      this.badge = items.length;
+    });
+  }
 
   ngOnInit(): void {
   }

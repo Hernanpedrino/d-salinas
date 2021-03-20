@@ -1,4 +1,8 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import 'firebase/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Pedidos } from '../models/pedidos.models';
+import { v4 as uuidv4 } from 'uuid';
 
 
 @Injectable({
@@ -6,19 +10,20 @@ import { EventEmitter, Injectable } from '@angular/core';
 })
 
 export class CarritoService {
+
+  constructor(private firestore: AngularFirestore) { }
   
-  constructor() { }
-  almacenarItemLs(item){
-    let listaProd = [];
-    if (localStorage.getItem(`${localStorage.length}`) == null) {
-      localStorage.setItem(`${localStorage.length}`, JSON.stringify(item));
-    } else {
-      let nuevaLista = listaProd.push(item);
-      let numero = localStorage.length;
-      let nuevoNum = numero + 1
-      let nuevaKey = 'ItemComprado'+nuevoNum;
-      localStorage.setItem(`${nuevaKey}`, JSON.stringify(nuevaLista))       
-      console.log(nuevaLista);
+  agregarItemPedido(item: Pedidos){
+    const idParaPedido = uuidv4();
+    if (localStorage.getItem('idPedido') === null) {
+      localStorage.setItem('idPedido', JSON.stringify(idParaPedido));
     }
+    this.firestore.collection(`pedidos/${localStorage.getItem('idPedido')}/pedido`).doc().set(item);
+  }
+  obtenerPedido(){
+    return this.firestore.collection<Pedidos>(`pedidos/${localStorage.getItem('idPedido')}/pedido`).valueChanges();
+  }
+  borrarPedido(){
+    this.firestore.collection('pedidos').doc(`${localStorage.getItem('idPedido')}`).delete();
   }
 }
