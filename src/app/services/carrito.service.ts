@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import 'firebase/firestore';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Pedidos } from '../models/pedidos.models';
 import { v4 as uuidv4 } from 'uuid';
-
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+export interface PedidoId extends Pedidos { id: string; }
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class CarritoService {
 
-  constructor(private firestore: AngularFirestore) { }
+  private pedidoscollection: AngularFirestoreCollection<Pedidos>;
+  pedidos: Observable<PedidoId[]>;
+  constructor(private firestore: AngularFirestore ) { }
   
   agregarItemPedido(item: Pedidos){
     const idParaPedido = uuidv4();
@@ -25,5 +29,17 @@ export class CarritoService {
   }
   borrarPedido(){
     this.firestore.collection('pedidos').doc(`${localStorage.getItem('idPedido')}`).delete();
+  }
+  obtenerItemDelPedido(){
+    this.pedidoscollection = this.firestore.collection<Pedidos>(`pedidos/${localStorage.getItem('idPedido')}/pedido`);
+    // this.pedidos = this.pedidoscollection.snapshotChanges().pipe(
+    //   map(actions => {
+    //     actions.map(a => {
+    //       const data = a.payload.doc.data() as Pedidos;
+    //       const id = a.payload.doc.id;
+    //       return {data, id};
+    //     });
+    //   })
+    // );
   }
 }

@@ -4,6 +4,7 @@
           <div class="form-group col-md-6">
             <label>Nombre</label>
             <input type="text" class="form-control" formControlName="nombre" id="">
+            <span class="text-danger" *ngIf="contacto.pristine === true && contacto.touched === true">Por favor complete este campo</span>
           </div>
           <div class="form-group col-md-6">
             <label>Apellido</label>

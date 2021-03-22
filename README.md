@@ -26,16 +26,11 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-Cosas Hechas:
-* Arreglada la vista de los detalles con su respectivo producto.
-* Cambiado el boton de comprar por el ver detalles para poder seleccionar los sabores.
 
 Cosas por hacer:
-* Mostrar correctamente el producto seleccionado, con su cantidad en la lista de pedidos.
-* Activar el span con la cantidad de productos activos en el carrito.
+* Activar el span con la cantidad de productos activos en el carrito (VER PORQUE NO FUNCIONA)
 * Darle funcionalidad a la lista del pedido con las sumas de los productos y cantidades totales.
-* Corregir el template para enviar correctamente el correo con el pedido.
 * Preguntarle al maxi si quiere un boton de wsp bussisnes en la pagina.
-* Agregar la zona del envio.
 * Volver a cargar las imagenes correctamente.
 * En la bd y en el modelo del producto agregar la parte de los sabores.
+* Poner en la pagina la ubicacion del usuario

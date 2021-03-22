@@ -31,15 +31,16 @@ export class ContactoComponent implements OnInit {
       pedido: '',
       email: ['', [Validators.required, Validators.email]],
     });
-
+    console.log(this.contacto);
+    console.log(this.contacto.value);
   }
   sendEmail(){
-    // const templateParams = this.contacto.value;
-    // this.emailservice.sendEmail(templateParams);
+    const templateParams = this.contacto.value;
+    this.emailservice.sendEmail(templateParams);
     console.log(this.contacto.value);
     this.carritoservice.borrarPedido();
     localStorage.clear();
     this.contacto.reset();
   }
 }
-// TODO: desabilitar el boton con el formulario no valido
+// TODO: no funciona el span y el ngif del pedido!

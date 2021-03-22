@@ -10,12 +10,12 @@ export class NavBarComponent implements OnInit {
 
   public badge: number;
   constructor(public caritoservice: CarritoService) { 
+  }
+  
+  ngOnInit(): void {
     this.caritoservice.obtenerPedido().subscribe(items => {
       this.badge = items.length;
     });
-  }
-
-  ngOnInit(): void {
   }
 
 }
