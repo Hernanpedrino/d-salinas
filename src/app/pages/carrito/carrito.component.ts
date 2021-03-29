@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class CarritoComponent implements OnInit {
 
-  public subTotal = 0;
+  public totalPedido = 0;
   public arregItems: Pedidos[] = [];
   subTotales = [] as any;
   constructor(private carritoservice: CarritoService) {
@@ -20,7 +20,17 @@ export class CarritoComponent implements OnInit {
     this.carritoservice.obtenerPedido().subscribe((pedido: Pedidos[]) => {
       this.arregItems = pedido;
     });
-    this.carritoservice.obtenerItemDelPedido();
+    this.carritoservice.obtenerItemDelPedido().subscribe(pedido => {
+      pedido.map(data => {
+        // const precio = data.data.precio;
+        // const cantidad = data.data.cantidad;
+        // const multiplic = precio * cantidad;
+        // this.subTotales.push(multiplic);
+      });
+      this.totalPedido = this.subTotales.reduce((a, b) => a + b, 0);
+      // console.log(this.totalPedido, this.subTotales);
+      // TODO: Hacer un pipe personalizado para sumar los totales.
+    });
   }
   borrarItem(){
     Swal.fire({
@@ -41,5 +51,4 @@ export class CarritoComponent implements OnInit {
       }
     });
   }
-
 }

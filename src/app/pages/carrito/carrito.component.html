@@ -19,7 +19,7 @@
         <td>{{ item.sabor }}</td>
         <td>{{ item.precio | currency}}</td>
         <td>{{ item.cantidad }}</td>
-        <td>1234.00</td>
+        <td>{{ item.precio*item.cantidad | currency }}</td>
         <td><button class="btn btn-success"><i class="fas fa-pencil-alt fa-lg"></i></button></td>
         <td><button class="btn btn-danger" (click)="borrarItem()"><i class="far fa-trash-alt fa-lg"></i></button></td>
     </tr>
@@ -28,7 +28,7 @@
     <tr>
         <th scope="row">Total del pedido</th>
         <td colspan="4"></td>
-        <td>$2343.50</td>
+        <td>{{ totalPedido | currency }}</td>
         <td colspan="2"><a routerLink="/confirmar-pedido" class="btn btn-success">Confirmar Pedido <i class="fas fa-check"></i></a></td>
     </tr>
     </tfoot>

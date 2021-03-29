@@ -32,7 +32,7 @@ export class DetallesComponent implements OnInit {
         this.formdet = this.fb.group({
           nombre: [`${this.idbaldes.titulo}`],
           descripcion: [`${this.idbaldes.descripcion}`],
-          precio: [`${this.precio}`],
+          precio: [parseInt(`${this.precio}`)],
           sabor: ['Seleccione un sabor', Validators.required],
           cantidad: ['Cantidad a comprar', Validators.required]
         });
