@@ -29,7 +29,8 @@ export class CarritoService {
       map( actions => actions.map(a => {
         const data: Pedidos = a.payload.doc.data();
         const id = a.payload.doc.id;
-        return {data, id};
+        const subTotalserv = a.payload.doc.data().cantidad * a.payload.doc.data().precio;
+        return {data, id, subTotalserv};
       }))
     );
   }
