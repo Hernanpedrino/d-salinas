@@ -18,9 +18,11 @@ export class ContactoComponent implements OnInit {
               private carritoservice: CarritoService) {
               this.crearFormularioContacto();
             }
-          
   ngOnInit(): void {
-
+    this.carritoservice.obtenerPedido().
+    subscribe((pedido: Pedidos[]) => {
+      this.arregItems = pedido;
+    });
   }
   crearFormularioContacto(){
     this.contacto = this.fb.group({
@@ -28,19 +30,19 @@ export class ContactoComponent implements OnInit {
       apellido: ['', Validators.required],
       telefono: ['', Validators.required],
       direccion: ['', Validators.required],
-      pedido: '',
       email: ['', [Validators.required, Validators.email]],
     });
     console.log(this.contacto);
     console.log(this.contacto.value);
   }
   sendEmail(){
-    const templateParams = this.contacto.value;
+    
+    const templateParams = this.contacto.value + this.arregItems;
+    console.log(templateParams);
     this.emailservice.sendEmail(templateParams);
-    console.log(this.contacto.value);
-    this.carritoservice.borrarPedido();
+    // this.carritoservice.borrarPedido();
     localStorage.clear();
     this.contacto.reset();
   }
 }
-// TODO: no funciona el span y el ngif del pedido!
+

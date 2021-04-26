@@ -1,5 +1,22 @@
 <app-carousel></app-carousel>
 <app-ofertas></app-ofertas>
 <div class="d-grid gap-2 col-6 mx-auto mb-5">
-    <button class="btn btn-primary" type="button">Ver todos los productos</button>
+    <button class="btn btn-primary" type="button" (click)="verTodo();">Ver todos los productos</button>
 </div>
+<div class="card-group mb-2">
+    <div class="card text-center animate__fadeInDown" *ngFor="let item of productos">
+        <a [routerLink]= "['/detalles/baldes', item.id]"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
+        <div class="card-body">
+          <h5 class="card-title">{{item.titulo}}</h5>
+          <p class="card-text">{{item.descripcion}}</p>
+        </div>  
+        <div class="card-footer text-center">
+          <p class="card-text"><strong>{{ item.precio | currency }}</strong></p>
+          <hr>
+          <a [routerLink]= "['/detalles/baldes', item.id]" class="btn btn-primary">Ver detalles</a>       
+        </div>
+      </div>
+</div>
+<!-- <div class="alert alert-primary text-center" *ngIf="cargando" role="alert">
+    <i class="fas fa-spinner fa-10x fa-spin"></i>
+</div> -->

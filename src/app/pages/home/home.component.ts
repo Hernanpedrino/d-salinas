@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { combineLatest } from 'rxjs';
+import { Helados } from 'src/app/models/helados.model';
+import { HeladosService } from '../../services/helados.service';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +9,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  baldes: Helados[] = [];
+  postres: Helados[] = [];
+  golosinas: Helados[] = [];
+  tacc: Helados[] = [];
+  productos: Helados[] = [];
+  constructor(private heladosservice: HeladosService) { }
 
   ngOnInit(): void {
   }
-
+  verTodo(){
+    combineLatest([
+      this.heladosservice.obtenerBaldesFb(),
+      this.heladosservice.obtenerPostresFb(),
+      this.heladosservice.obtenerGolosinasFb(),
+      this.heladosservice.obtenerSintaccFb()
+    ])
+    .subscribe(([baldes, postres, golosinas, tacc]) => {
+      this.baldes = baldes,
+      this.postres = postres,
+      this.golosinas = golosinas,
+      this.tacc = tacc;
+      const productos = this.baldes.concat(this.golosinas, this.postres, this.tacc);
+      this.productos = productos;
+      console.log(this.productos);
+    });
+  }
 }

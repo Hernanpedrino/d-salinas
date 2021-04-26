@@ -10,14 +10,14 @@ import { HeladosService } from 'src/app/services/helados.service';
 })
 export class OfertasComponent implements OnInit {
 
-  cargando: boolean = true;
-  ofertasbaldes:Helados[]=[];
-  ofertaspostres:Helados[]=[];
-  ofertasgolosinas:Helados[]=[];
-  ofertastacc:Helados[]=[];
-  todaslasofertas:Helados[] = [];
+  cargando = true;
+  ofertasbaldes: Helados[] = [];
+  ofertaspostres: Helados[] = [];
+  ofertasgolosinas: Helados[] = [];
+  ofertastacc: Helados[] = [];
+  todaslasofertas: Helados[] = [];
   constructor(private heladosservice: HeladosService) { }
-  
+
   ngOnInit(): void {
     combineLatest([
       this.heladosservice.obtenerOfertasBaldesFb(),
@@ -25,14 +25,14 @@ export class OfertasComponent implements OnInit {
       this.heladosservice.obtenerOfertasGolosinasFb(),
       this.heladosservice.obtenerOfertastaccFb()
     ])
-    .subscribe(([baldes, postres, golosinas, tacc])=>{
+    .subscribe(([baldes, postres, golosinas, tacc]) => {
       this.ofertasbaldes = baldes,
       this.ofertaspostres = postres,
       this.ofertasgolosinas = golosinas,
-      this.ofertastacc = tacc
-      const todaslasofertas = this.ofertasbaldes.concat(this.ofertasgolosinas,this.ofertaspostres,this.ofertastacc)
+      this.ofertastacc = tacc;
+      const todaslasofertas = this.ofertasbaldes.concat(this.ofertasgolosinas, this.ofertaspostres, this.ofertastacc);
       this.todaslasofertas = todaslasofertas,
-      this.cargando = false
-    })
+      this.cargando = false;
+    });
   }
 }

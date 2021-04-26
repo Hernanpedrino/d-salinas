@@ -14,7 +14,7 @@ export class ProductosComponent implements OnInit {
 
   public items: Helados[] = [];
   public tipoDeProd: string;
-  public cargando: boolean = true;
+  public cargando = true;
   constructor(private heladosservice: HeladosService,
               private router: Router) { 
       this.router.events

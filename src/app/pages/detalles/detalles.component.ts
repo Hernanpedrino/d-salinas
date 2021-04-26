@@ -15,7 +15,7 @@ export class DetallesComponent implements OnInit {
   idbaldes: any = {};
   precio: number;
   saboresArreg: any[];
-  public cargando: boolean = true;
+  public cargando = true;
   constructor(private heladosservice: HeladosService,
               private activroute: ActivatedRoute,
               private router: Router,
@@ -53,7 +53,10 @@ export class DetallesComponent implements OnInit {
         timer: 2000
       }),
       this.carritoservice.agregarItemPedido(formdet.value);
-      this.router.navigate(['/carrito']);
+      console.log(formdet.value);
+      setTimeout(() => {
+        this.router.navigate(['/carrito']);
+      }, 2000);
     }
   }
 }

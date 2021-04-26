@@ -13,19 +13,23 @@ export class CarritoComponent implements OnInit {
 
   public subTotal = 0;
   public arregItems: Pedidos[] = [];
-  subTotales = [] as any;
+  public subTotales = [] as any;
   constructor(private carritoservice: CarritoService) {
   }
   ngOnInit() {
     this.carritoservice.obtenerPedido().subscribe((pedido: Pedidos[]) => {
       this.arregItems = pedido;
     });
-    // this.carritoservice.obtenerItemDelPedido().subscribe(
-    //   pedidos =>{
-        
-    //   }
-    // );
-      
+    this.carritoservice.obtenerItemDelPedido().subscribe(
+      pedidos => {
+         pedidos.find((items) => {
+          const sbt = items.subTotalserv;
+          this.subTotales.push(sbt);
+          const reducer = (accumulator, currentValue) => accumulator + currentValue;
+          this.subTotal = this.subTotales.reduce(reducer);
+        });
+      }
+    );
   }
   borrarItem(){
     Swal.fire({
@@ -39,6 +43,7 @@ export class CarritoComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.carritoservice.borrarItemDelPedido();
         Swal.fire(
           'Item borrado',
           'Su articulo ha sido quitado del carrito'

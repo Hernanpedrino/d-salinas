@@ -46,4 +46,16 @@ export class HeladosService {
   obtenerDocumentoId(id: string){
     return this.firestore.collection<Helados>(`${this.tipoProdHref}`).doc(`${id}`).get();
   }
+  obtenerBaldesFb(){
+    return this.firestore.collection<Helados>('baldes').valueChanges();
+  }
+  obtenerPostresFb(){
+    return this.firestore.collection<Helados>('postres-helados').valueChanges();
+  }
+  obtenerGolosinasFb(){
+    return this.firestore.collection<Helados>('golosinas-heladas').valueChanges();
+  }
+  obtenerSintaccFb(){
+    return this.firestore.collection<Helados>('productos-sin-tacc').valueChanges();
+  }
 }
