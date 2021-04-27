@@ -36,7 +36,6 @@ export class ContactoComponent implements OnInit {
     console.log(this.contacto.value);
   }
   sendEmail(){
-    
     const templateParams = this.contacto.value + this.arregItems;
     console.log(templateParams);
     this.emailservice.sendEmail(templateParams);

@@ -20,7 +20,7 @@
         <td>{{ item.precio | currency}}</td>
         <td>{{ item.cantidad }}</td>
         <td>{{ item.precio*item.cantidad | currency }}</td>
-        <td><button class="btn btn-success"><i class="fas fa-pencil-alt fa-lg"></i></button></td>
+        <td><button class="btn btn-success" (click)="editar() "><i class="fas fa-pencil-alt fa-lg"></i></button></td>
         <td><button class="btn btn-danger" (click)="borrarItem()"><i class="far fa-trash-alt fa-lg"></i></button></td>
     </tr>
     </tbody>

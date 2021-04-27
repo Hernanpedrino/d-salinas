@@ -4,7 +4,8 @@ export class Pedidos{
         public descripcion: string,
         public nombre: string,
         public precio: number,
-        public sabor: string
+        public sabor: string,
+        // public tipoprod: string
     ){}
 }
 
