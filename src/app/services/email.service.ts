@@ -9,23 +9,22 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class EmailService {
-  
   constructor() { }
- 
+
 sendEmail(templateParams) {
-    emailjs.send(`${environment.emailJs.serviceId}`,`${environment.emailJs.templateId}`, templateParams,`${environment.emailJs.userId}`,)
+    emailjs.send(`${environment.emailJs.serviceId}`,`${environment.emailJs.templateId}`, templateParams, `${environment.emailJs.userId}` )
       .then((result: EmailJSResponseStatus) => {
         Swal.fire({
           icon: 'success',
           title: 'Muchas gracias por tu compra!!!',
           text: 'Tu pedido fue enviado con exito. Nos pondremos en contacto a la brevedad.',
-        })
+        });
       }, (error) => {
         Swal.fire({
           icon: 'error',
           title: 'Algo salio mal',
           text: 'Sucedio un error. Por favor intente nuevamente.',
-        })
+        });
         console.log(error.text);
       });
   }

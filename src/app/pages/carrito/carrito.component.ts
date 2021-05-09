@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CarritoService } from '../../services/carrito.service';
-import { Router } from '@angular/router';
 import { Pedidos } from '../../models/pedidos.models';
 import Swal from 'sweetalert2';
 
@@ -11,12 +10,11 @@ import Swal from 'sweetalert2';
   styleUrls: ['./carrito.component.css']
 })
 export class CarritoComponent implements OnInit {
-  public id;
+
   public subTotal = 0;
   public arregItems: Pedidos[] = [];
   public subTotales = [] as any;
-  constructor(private carritoservice: CarritoService,
-              private router: Router) {
+  constructor(private carritoservice: CarritoService) {
   }
   ngOnInit() {
     this.carritoservice.obtenerPedido().subscribe((pedido: Pedidos[]) => {
@@ -24,7 +22,7 @@ export class CarritoComponent implements OnInit {
     });
     this.carritoservice.obtenerItemDelPedido().subscribe(
       pedidos => {
-        pedidos.find((items) => {
+         pedidos.find((items) => {
           const sbt = items.subTotalserv;
           this.subTotales.push(sbt);
           const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -32,14 +30,6 @@ export class CarritoComponent implements OnInit {
         });
       }
     );
-  }
-  editar(){
-    this.carritoservice.obtenerItemDelPedido().subscribe(datos => {
-      datos.find((items) => {
-        this.id = items.id;
-      });
-      this.router.navigate([`detalles/${this.id}`]);
-    });
   }
   borrarItem(){
     Swal.fire({

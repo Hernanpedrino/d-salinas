@@ -20,9 +20,9 @@ export class HomeComponent implements OnInit {
   }
   verTodo(){
     combineLatest([
-      this.heladosservice.obtenerBaldesFb(),
-      this.heladosservice.obtenerPostresFb(),
       this.heladosservice.obtenerGolosinasFb(),
+      this.heladosservice.obtenerPostresFb(),
+      this.heladosservice.obtenerBaldesFb(),
       this.heladosservice.obtenerSintaccFb()
     ])
     .subscribe(([baldes, postres, golosinas, tacc]) => {
@@ -32,7 +32,6 @@ export class HomeComponent implements OnInit {
       this.tacc = tacc;
       const productos = this.baldes.concat(this.golosinas, this.postres, this.tacc);
       this.productos = productos;
-      console.log(this.productos);
     });
   }
 }

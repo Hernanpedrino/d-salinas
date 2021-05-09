@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class DetallesComponent implements OnInit {
   formdet: FormGroup;
-  idproducto: any = {};
+  idbaldes: any = {};
   precio: number;
   saboresArreg: any[];
   public cargando = true;
@@ -24,15 +24,14 @@ export class DetallesComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.activroute.snapshot.paramMap.get('id');
-    console.log(this.activroute.snapshot.data.producto);
     this.heladosservice.obtenerDocumentoId(`${id}`).subscribe(
       resp => {
-        this.idproducto = resp.data();
+        this.idbaldes = resp.data();
         this.precio = resp.data().precio;
         this.saboresArreg = resp.data().sabores;
         this.formdet = this.fb.group({
-          nombre: [`${this.idproducto.titulo}`],
-          descripcion: [`${this.idproducto.descripcion}`],
+          nombre: [`${this.idbaldes.titulo}`],
+          descripcion: [`${this.idbaldes.descripcion}`],
           precio: [parseInt(`${this.precio}`)],
           sabor: ['Seleccione un sabor', Validators.required],
           cantidad: ['Cantidad a comprar', Validators.required]
@@ -54,7 +53,6 @@ export class DetallesComponent implements OnInit {
         timer: 2000
       }),
       this.carritoservice.agregarItemPedido(formdet.value);
-      console.log(formdet.value);
       setTimeout(() => {
         this.router.navigate(['/carrito']);
       }, 2000);
