@@ -53,9 +53,7 @@ export class DetallesComponent implements OnInit {
         timer: 2000
       }),
       this.carritoservice.agregarItemPedido(formdet.value);
-      setTimeout(() => {
-        this.router.navigate(['/carrito']);
-      }, 2000);
+      this.router.navigate(['/carrito']);
     }
   }
 }

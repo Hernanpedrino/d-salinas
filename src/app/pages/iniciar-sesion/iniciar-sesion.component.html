@@ -1,0 +1,28 @@
+<div class="container">
+    <h1 class="text-center mt-4">Iniciar Sesion</h1>
+    <form [formGroup]="inicioSesion" (ngSubmit)="login()">
+        <div class="row justify-content-center mt-4">
+            <div class="col-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Email:</span>
+                    <input type="text" class="form-control" placeholder="" aria-label="Email" aria-describedby="basic-addon1" formControlName="email">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">Contraseña:</span>
+                    <input type="password" class="form-control" placeholder="" aria-label="Contraseña" aria-describedby="basic-addon1"
+                    formControlName="password">
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-outline-primary" type="submit">Iniciar sesion</button>
+                    <button class="btn btn-outline-success" type="button">Iniciar Sesion con Google</button>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-4">
+                <div class="col-6">
+                    <p>¿Aun no te registraste? <span><a routerLink="/registrarse">Click Aqui</a></span></p>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

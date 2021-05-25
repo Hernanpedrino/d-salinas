@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EmailService } from '../../services/email.service';
+// import { EmailService } from '../../services/email.service';
+import { AuthService } from '../../services/auth.service';
+import { UsuariosService } from '../../services/usuarios.service';
 import { CarritoService } from '../../services/carrito.service';
-import { Pedidos } from 'src/app/models/pedidos.models'
+import { Pedidos } from 'src/app/models/pedidos.models';
 
 @Component({
   selector: 'app-contacto',
@@ -15,7 +17,8 @@ export class ContactoComponent implements OnInit {
   private itemsFb;
   contacto: FormGroup;
   constructor(private fb: FormBuilder,
-              private emailservice: EmailService,
+              private authservice: AuthService,
+              private usuarioservice: UsuariosService,
               private carritoservice: CarritoService) {
               this.crearFormularioContacto();
             }
@@ -31,13 +34,42 @@ export class ContactoComponent implements OnInit {
   }
   crearFormularioContacto(){
     this.contacto = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      telefono: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
+      apellido: ['', [Validators.required, Validators.minLength(3)]],
+      telefono: ['', [Validators.required, Validators.minLength(7), Validators.pattern(/^\d+$/)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       direccion: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]]
     });
   }
+  crearUsuario(){
+    const datos = {
+      ...this.contacto.value
+    };
+    this.authservice.nuevoUsuario(datos).subscribe(
+      resp => {
+        console.log(resp);
+      }, (err) => {
+        console.log(err.error.error.message);
+      }
+    );
+    this.usuarioservice.crearUsuario(datos);
+  }
+  // sendEmail(){
+  //   const templateParams = {
+  //     nombre: this.contacto.get('nombre').value,
+  //     apellido: this.contacto.get('apellido').value,
+  //     telefono: this.contacto.get('telefono').value,
+  //     direccion: this.contacto.get('direccion').value,
+  //     email: this.contacto.get('email').value,
+  //     pedido: this.itemsFb
+  //   };
+  //   // this.emailservice.sendEmail(templateParams);
+  //   this.carritoservice.borrarPedido();
+  //   localStorage.clear();
+  //   this.contacto.reset();
+  // }
+  // Getters de validaciones
   get nombreInvalido(){
     return this.contacto.get('nombre').invalid && this.contacto.get('nombre').touched;
   }
@@ -68,19 +100,6 @@ export class ContactoComponent implements OnInit {
   get telefonoValido(){
     return this.contacto.get('telefono').valid;
   }
-  sendEmail(){
-    const templateParams = {
-      nombre: this.contacto.get('nombre').value,
-      apellido: this.contacto.get('apellido').value,
-      telefono: this.contacto.get('telefono').value,
-      direccion: this.contacto.get('direccion').value,
-      email: this.contacto.get('email').value,
-      pedido: this.itemsFb
-    };
-    this.emailservice.sendEmail(templateParams);
-    // this.carritoservice.borrarPedido();
-    localStorage.clear();
-    this.contacto.reset();
-  }
+
 }
 

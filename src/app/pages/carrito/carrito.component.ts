@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CarritoService } from '../../services/carrito.service';
 import { Pedidos } from '../../models/pedidos.models';
 import Swal from 'sweetalert2';
@@ -14,7 +15,8 @@ export class CarritoComponent implements OnInit {
   public subTotal = 0;
   public arregItems: Pedidos[] = [];
   public subTotales = [] as any;
-  constructor(private carritoservice: CarritoService) {
+  constructor(private carritoservice: CarritoService,
+              private router: Router) {
   }
   ngOnInit() {
     this.carritoservice.obtenerPedido().subscribe((pedido: Pedidos[]) => {
@@ -33,21 +35,21 @@ export class CarritoComponent implements OnInit {
   }
   borrarItem(){
     Swal.fire({
-      title: 'Borrar item del carrito',
-      text: '¿Quieres quitar este item del carrito?',
+      title: 'Vaciar Carrito',
+      text: '¿Quieres vaciar todo el carrito?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, quitar item',
+      confirmButtonText: 'Si, vaciar todo',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.carritoservice.borrarItemDelPedido();
+        this.carritoservice.borrarPedido();
         Swal.fire(
-          'Item borrado',
-          'Su articulo ha sido quitado del carrito'
+          'Carrito vaciado',
         );
+        this.router.navigate(['/home']);
       }
     });
   }

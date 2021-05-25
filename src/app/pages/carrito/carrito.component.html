@@ -3,33 +3,29 @@
     <thead>
     <tr>
         <th scope="col" class="col-1">#</th>
-        <th scope="col">Producto</th>
-        <th scope="col">Sabor</th>
-        <th scope="col">Precio  unitario</th>
+        <th scope="col" colspan="2">Producto</th>
+        <th scope="col" colspan="2">Sabor</th>
+        <th scope="col">Precio unitario</th>
         <th scope="col">Cantidad</th>
         <th scope="col">Sub-total</th>
-        <th scope="col" class="col-1">Modificar</th>
-        <th scope="col" class="col-1">Quitar producto</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of arregItems; let i = index">
         <th scope="row">{{ i + 1}}</th>
-        <td>{{ item.nombre }}</td>
-        <td>{{ item.sabor }}</td>
+        <td colspan="2">{{ item.nombre }}</td>
+        <td colspan="2">{{ item.sabor }}</td>
         <td>{{ item.precio | currency}}</td>
         <td>{{ item.cantidad }}</td>
         <td>{{ item.precio*item.cantidad | currency }}</td>
-        <td><button class="btn btn-success"><i class="fas fa-pencil-alt fa-lg"></i></button></td>
-        <td><button class="btn btn-danger" (click)="borrarItem()"><i class="far fa-trash-alt fa-lg"></i></button></td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
-        <th scope="row">Total del pedido</th>
-        <td colspan="4"></td>
-        <td>{{ subTotal | currency}}</td>
-        <td colspan="2"><button routerLink="/confirmar-pedido" class="btn btn-success" [disabled]="arregItems.length===0">Confirmar Pedido <i class="fas fa-check"></i></button></td>
+        <th scope="row" colspan="5">Total del pedido:</th>
+        <td class="col-2"><strong>{{ subTotal | currency}}</strong></td>
+        <td class="col-2"><button routerLink="/confirmar-pedido" class="btn btn-success" [disabled]="arregItems.length===0">Confirmar Pedido <i class="fas fa-check"></i></button></td>
+        <td class="col-2"><button  class="btn btn-danger" [disabled]="arregItems.length===0" (click)="borrarItem()">Vaciar carrito <i class="fas fa-trash"></i></button></td>
     </tr>
     </tfoot>
 </table>

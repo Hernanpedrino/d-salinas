@@ -11,6 +11,7 @@ import { DetallesComponent } from './detalles/detalles.component';
 import { OfertasComponent } from './ofertas/ofertas.component';
 import { ProductosComponent } from './productos/productos.component';
 import { ContactoComponent } from './contacto/contacto.component';
+import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
 
 
 
@@ -20,7 +21,9 @@ import { ContactoComponent } from './contacto/contacto.component';
     HomeComponent,
     DetallesComponent,
     OfertasComponent,
-    ProductosComponent, ContactoComponent
+    ProductosComponent,
+    ContactoComponent,
+    IniciarSesionComponent
   ],
   imports: [
     CommonModule,

@@ -4,6 +4,7 @@ import { ProductosComponent } from './productos/productos.component';
 import { CarritoComponent } from './carrito/carrito.component';
 import { DetallesComponent } from './detalles/detalles.component';
 import { ContactoComponent } from './contacto/contacto.component';
+import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
 
 const routes: Routes = [
     { path: 'baldes', component: ProductosComponent, data: {producto: 'baldes'} },
@@ -12,7 +13,8 @@ const routes: Routes = [
     { path: 'congelados', component: ProductosComponent, data: {producto: 'congelados'} },
     { path: 'productos-sin-tacc', component: ProductosComponent, data: {producto: 'productos-sin-tacc'} },
     { path: 'carrito', component: CarritoComponent },
-    { path: 'confirmar-pedido', component: ContactoComponent },
+    { path: 'registrarse', component: ContactoComponent },
+    { path: 'iniciar-sesion', component: IniciarSesionComponent },
     { path: 'detalles/baldes/:id', component: DetallesComponent, data: {producto: 'baldes'} },
     { path: 'detalles/postres-helados/:id', component: DetallesComponent, data: {producto: 'postres-helados'} },
     { path: 'detalles/productos-sin-tacc/:id', component: DetallesComponent, data: {producto: 'productos-sin-tacc'} },

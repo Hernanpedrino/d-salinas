@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { delay } from 'rxjs/operators';
 import { CarritoService } from '../../services/carrito.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class NavBarComponent implements OnInit {
   ngOnInit(): void {
     this.caritoservice.obtenerPedido().subscribe(items => {
       this.badge = items.length;
-    });
+    }),
+    delay(2000);
   }
 
 }

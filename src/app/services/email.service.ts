@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import emailjs, { EmailJSResponseStatus } from 'emailjs-com';
 import { init } from 'emailjs-com';
 init(`${environment.emailJs.userId}`);
@@ -9,7 +10,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class EmailService {
-  constructor() { }
+  constructor(private router: Router) { }
 
 sendEmail(templateParams) {
     emailjs.send(`${environment.emailJs.serviceId}`,`${environment.emailJs.templateId}`, templateParams, `${environment.emailJs.userId}` )
@@ -19,6 +20,7 @@ sendEmail(templateParams) {
           title: 'Muchas gracias por tu compra!!!',
           text: 'Tu pedido fue enviado con exito. Nos pondremos en contacto a la brevedad.',
         });
+        this.router.navigate(['/home']);
       }, (error) => {
         Swal.fire({
           icon: 'error',

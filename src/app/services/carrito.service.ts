@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { delay, map } from 'rxjs/operators';
 import { Pedidos } from '../models/pedidos.models';
 import {  v4 as uuidv4 } from 'uuid';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +17,11 @@ export class CarritoService {
     if (localStorage.getItem('idPedido') === null) {
       localStorage.setItem('idPedido', JSON.stringify(idParaPedido));
     }
-    this.firestore.collection(`pedidos/${localStorage.getItem('idPedido')}/pedido`).doc().set(item);
+    this.firestore.collection(`pedidos/${localStorage.getItem('idPedido')}/pedido`).doc(`${localStorage.getItem('idPedido')}`).set(item),
+    delay(2000);
   }
   obtenerPedido(){
      return this.firestore.collection<Pedidos>(`pedidos/${localStorage.getItem('idPedido')}/pedido`).valueChanges();
-  }
-  borrarItemDelPedido(){
-    this.firestore.collection('pedidos').doc(`${localStorage.getItem('idPedido')}/pedido/${this.idItemPedido}`).delete();
   }
   obtenerItemDelPedido(){
     return this.firestore.collection<Pedidos>(`pedidos/${localStorage.getItem('idPedido')}/pedido`).snapshotChanges().pipe(
@@ -35,5 +33,8 @@ export class CarritoService {
         return {data, id, subTotalserv};
       }))
     );
+  }
+  borrarPedido(){
+    this.firestore.collection('pedidos').doc(`${localStorage.getItem('idPedido')}/pedido/${localStorage.getItem('idPedido')}`).delete();
   }
 }
