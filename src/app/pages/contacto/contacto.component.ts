@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 // import { EmailService } from '../../services/email.service';
 import { AuthService } from '../../services/auth.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { CarritoService } from '../../services/carrito.service';
 import { Pedidos } from 'src/app/models/pedidos.models';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-contacto',
@@ -19,7 +21,8 @@ export class ContactoComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private authservice: AuthService,
               private usuarioservice: UsuariosService,
-              private carritoservice: CarritoService) {
+              private carritoservice: CarritoService,
+              private router: Router) {
               this.crearFormularioContacto();
             }
   ngOnInit(): void {
@@ -48,9 +51,20 @@ export class ContactoComponent implements OnInit {
     };
     this.authservice.nuevoUsuario(datos).subscribe(
       resp => {
-        console.log(resp);
+        Swal.fire({
+          icon: 'info',
+          title: 'Registrando usuario',
+          text: 'Espere por favor'
+        });
+        Swal.showLoading();
+        this.router.navigateByUrl('/home');
+        Swal.close();
       }, (err) => {
-        console.log(err.error.error.message);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: err.error.error.message
+        });
       }
     );
     this.usuarioservice.crearUsuario(datos);
@@ -99,6 +113,12 @@ export class ContactoComponent implements OnInit {
   }
   get telefonoValido(){
     return this.contacto.get('telefono').valid;
+  }
+  get passwordInvalido(){
+    return this.contacto.get('password').invalid && this.contacto.get('password').touched;
+  }
+  get passwordValido(){
+    return this.contacto.get('password').valid;
   }
 
 }

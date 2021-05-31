@@ -54,6 +54,9 @@ export class AuthService {
   private guardarToken( idToken: string){
     this.userToken = idToken;
     localStorage.setItem('token', this.userToken);
+    const hoy = new Date();
+    hoy.setSeconds(3600);
+    localStorage.setItem('expToken', hoy.getTime().toString());
   }
   obtenerTokenLs(){
     if (localStorage.getItem('token')) {
@@ -62,5 +65,18 @@ export class AuthService {
       this.userToken = '';
     }
     return this.userToken;
+  }
+  usuarioAutenticado(): boolean{
+    if (this.userToken.length < 2) {
+      return false;
+    }
+    const expira = Number(localStorage.getItem('expToken'));
+    const venceToken = new Date();
+    venceToken.setTime(expira);
+    if (venceToken > new Date()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

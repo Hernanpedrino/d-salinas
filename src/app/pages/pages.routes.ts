@@ -5,6 +5,7 @@ import { CarritoComponent } from './carrito/carrito.component';
 import { DetallesComponent } from './detalles/detalles.component';
 import { ContactoComponent } from './contacto/contacto.component';
 import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
     { path: 'baldes', component: ProductosComponent, data: {producto: 'baldes'} },
@@ -12,7 +13,7 @@ const routes: Routes = [
     { path: 'postres-helados', component: ProductosComponent, data: {producto: 'postres-helados'} },
     { path: 'congelados', component: ProductosComponent, data: {producto: 'congelados'} },
     { path: 'productos-sin-tacc', component: ProductosComponent, data: {producto: 'productos-sin-tacc'} },
-    { path: 'carrito', component: CarritoComponent },
+    { path: 'carrito', component: CarritoComponent, canActivate: [AuthGuard] },
     { path: 'registrarse', component: ContactoComponent },
     { path: 'iniciar-sesion', component: IniciarSesionComponent },
     { path: 'detalles/baldes/:id', component: DetallesComponent, data: {producto: 'baldes'} },

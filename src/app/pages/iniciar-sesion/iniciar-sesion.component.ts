@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
@@ -12,7 +13,8 @@ export class IniciarSesionComponent implements OnInit {
 
   inicioSesion: FormGroup;
   constructor(private fb: FormBuilder,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private router: Router) {
     this.inicioSesion = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -41,6 +43,7 @@ export class IniciarSesionComponent implements OnInit {
       resp => {
         console.log(resp);
         Swal.close();
+        this.router.navigateByUrl('/home');
       }, err => {
         if (err.error.error.message === 'EMAIL_NOT_FOUND') {
           Swal.fire({
@@ -48,14 +51,13 @@ export class IniciarSesionComponent implements OnInit {
             title: 'El correo no esta registrado',
             text: 'Por favor cree una cuenta'
           });
-          console.log(err.error.error.message);
+          this.router.navigateByUrl('/registrarse');
         } else{
           Swal.fire({
             icon: 'error',
             title: 'Error',
             text: 'Email o contraseña incorrecto'
           });
-          console.log(err.error.error.message);
         }
       }
     );
