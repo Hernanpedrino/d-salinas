@@ -38,3 +38,5 @@ export class CarritoService {
     this.firestore.collection('pedidos').doc(`${localStorage.getItem('idPedido')}/pedido/${localStorage.getItem('idPedido')}`).delete();
   }
 }
+// TODO: Solucionar la forma de registrar el pedido para poder obtenerlo de mejor forma.
+// TODO: Revisar en el curso nuevo de udemy la forma de sumar los pedidos y el trabajo del carrito. 

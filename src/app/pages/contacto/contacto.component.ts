@@ -33,6 +33,8 @@ export class ContactoComponent implements OnInit {
         const ped = Object.entries(items);
         this.itemsFb = ped;
       }
+    }, (error) => {
+      console.log(error);
     });
   }
   crearFormularioContacto(){
@@ -46,18 +48,26 @@ export class ContactoComponent implements OnInit {
     });
   }
   crearUsuario(){
+    const password = this.contacto.get('password').value;
     const datos = {
-      ...this.contacto.value
+      nombre: this.contacto.get('nombre').value,
+      apellido: this.contacto.get('apellido').value,
+      telefono: this.contacto.get('telefono').value,
+      direccion: this.contacto.get('direccion').value,
+      email: this.contacto.get('email').value,
+      google: false
     };
-    this.authservice.nuevoUsuario(datos).subscribe(
+    console.log(datos);
+    this.authservice.nuevoUsuario(datos.email, password).subscribe(
       resp => {
+        console.log(resp);
         Swal.fire({
           icon: 'info',
           title: 'Registrando usuario',
           text: 'Espere por favor'
         });
         Swal.showLoading();
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/login');
         Swal.close();
       }, (err) => {
         Swal.fire({

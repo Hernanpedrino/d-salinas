@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
       this.tacc = tacc;
       const productos = this.baldes.concat(this.golosinas, this.postres, this.tacc);
       this.productos = productos;
+    }, (error) => {
+      console.log(error);
     });
   }
 }

@@ -1,82 +1,46 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.prod';
-import { Usuarios } from '../models/usuario.model';
-import { map } from 'rxjs/operators';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private url = 'https://identitytoolkit.googleapis.com/v1';
-  private apiKey = environment.firebase.apiKey;
-  userToken: string;
-  // Para crear nuevo usuario
-  // https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
-  // Para iniciar sesion con correo y contraseña
-  // https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]
 
-  constructor(private http: HttpClient) {
-    this.obtenerTokenLs();
-   }
-  nuevoUsuario(usuario: Usuarios){
-    const authData = {
-      ...usuario,
-      returnSecureToken: true
-    };
-    return this.http.post(
-      `${this.url}/accounts:signUp?key=${this.apiKey}`,
-      authData
-    ).pipe(
-      map(resp => {
-        // tslint:disable-next-line: no-string-literal
-        this.guardarToken(resp[ 'idToken' ]);
-        return resp;
-      })
-    );
+  constructor() {   }
+  nuevoUsuario(email: string, password: string){
+    const createObs$ = firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      console.log(user);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      // ..
+    });
+    const subscription = from(createObs$);
+    return subscription;
   }
-  login(usuario: Usuarios){
-    const authData = {
-      ...usuario,
-      returnSecureToken: true
-    };
-    return this.http.post(
-      `${this.url}/accounts:signInWithPassword?key=${this.apiKey}`,
-      authData
-    ).pipe(
-      map(resp => {
-        // tslint:disable-next-line: no-string-literal
-        this.guardarToken(resp[ 'idToken' ]);
-        return resp;
-      })
-    );
-  }
-  private guardarToken( idToken: string){
-    this.userToken = idToken;
-    localStorage.setItem('token', this.userToken);
-    const hoy = new Date();
-    hoy.setSeconds(3600);
-    localStorage.setItem('expToken', hoy.getTime().toString());
-  }
-  obtenerTokenLs(){
-    if (localStorage.getItem('token')) {
-      this.userToken = localStorage.getItem('token');
-    } else{
-      this.userToken = '';
-    }
-    return this.userToken;
-  }
-  usuarioAutenticado(): boolean{
-    if (this.userToken.length < 2) {
-      return false;
-    }
-    const expira = Number(localStorage.getItem('expToken'));
-    const venceToken = new Date();
-    venceToken.setTime(expira);
-    if (venceToken > new Date()) {
-      return true;
-    } else {
-      return false;
-    }
+  inicioSesionConEmailPassword(email: string, password: string){
+    const createObs$ = firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      console.log(user);
+      // ...
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
+    const subscription = from(createObs$);
+    return subscription;
   }
 }
+// TODO: Solucionar la verificacion por correo electronico para que sea mas seguro.
+// TODO: Implementar el inicio de sesion con google.

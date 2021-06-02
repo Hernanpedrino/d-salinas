@@ -39,9 +39,10 @@ export class IniciarSesionComponent implements OnInit {
       text: 'Espere por favor'
     });
     Swal.showLoading();
-    this.authService.login(this.inicioSesion.value).subscribe(
+    const email = this.inicioSesion.get('email').value;
+    const password = this.inicioSesion.get('password').value;
+    this.authService.inicioSesionConEmailPassword(email, password).subscribe(
       resp => {
-        console.log(resp);
         Swal.close();
         this.router.navigateByUrl('/home');
       }, err => {
