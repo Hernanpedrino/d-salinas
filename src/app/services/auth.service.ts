@@ -41,6 +41,38 @@ export class AuthService {
     const subscription = from(createObs$);
     return subscription;
   }
+  inicioSesionGoogle(){
+    const provider = new firebase.auth.GoogleAuthProvider();
+    const createObs$ = firebase.auth()
+    .signInWithPopup(provider)
+    .then((result) => {
+      const credential = result.credential;
+      // The signed-in user info.
+      const user = result.user;
+      console.log('Credenciales: ', credential, 'Usuario: ', user);
+      // ...
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The firebase.auth.AuthCredential type that was used.
+      const credential = error.credential;
+      // ...
+      console.log(errorCode, errorMessage, email, credential);
+    });
+    const subscription = from(createObs$);
+    return subscription;
+  }
+  logout(){
+    const createObs$ = firebase.auth().signOut().then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+    const subscription = from(createObs$);
+    return subscription;
+  }
 }
-// TODO: Solucionar la verificacion por correo electronico para que sea mas seguro.
-// TODO: Implementar el inicio de sesion con google.
+
