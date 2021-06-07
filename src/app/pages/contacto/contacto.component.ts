@@ -16,27 +16,15 @@ import Swal from 'sweetalert2';
 export class ContactoComponent implements OnInit {
 
   public arregItems: Pedidos[] = [];
-  private itemsFb;
+  // private itemsFb;
   contacto: FormGroup;
   constructor(private fb: FormBuilder,
               private authservice: AuthService,
               private usuarioservice: UsuariosService,
-              private carritoservice: CarritoService,
               private router: Router) {
               this.crearFormularioContacto();
             }
-  ngOnInit(): void {
-    this.carritoservice.obtenerPedido().
-    subscribe((pedido: Pedidos[]) => {
-      this.arregItems = pedido;
-      for (const items of this.arregItems) {
-        const ped = Object.entries(items);
-        this.itemsFb = ped;
-      }
-    }, (error) => {
-      console.log(error);
-    });
-  }
+  ngOnInit(): void { }
   crearFormularioContacto(){
     this.contacto = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(3)]],
@@ -57,16 +45,16 @@ export class ContactoComponent implements OnInit {
       email: this.contacto.get('email').value,
       google: false
     };
-    console.log(datos);
     this.authservice.nuevoUsuario(datos.email, password).subscribe(
       resp => {
-        console.log(resp);
         Swal.fire({
           icon: 'info',
           title: 'Registrando usuario',
           text: 'Espere por favor'
         });
         Swal.showLoading();
+        const uid = resp.user.uid;
+        this.usuarioservice.agregarUsuario(datos, uid);
         this.router.navigateByUrl('/login');
         Swal.close();
       }, (err) => {
@@ -77,7 +65,6 @@ export class ContactoComponent implements OnInit {
         });
       }
     );
-    this.usuarioservice.crearUsuario(datos);
   }
   // sendEmail(){
   //   const templateParams = {

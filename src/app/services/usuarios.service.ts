@@ -9,6 +9,8 @@ import { Usuarios } from '../models/usuario.model';
 })
 export class UsuariosService {
 
+  public nombre = '';
+  public apellido = '';
   constructor(private firestore: AngularFirestore) { }
   obtenerUsuarioActivo(){
     firebase.auth().onAuthStateChanged((user) => {
@@ -20,13 +22,23 @@ export class UsuariosService {
         // User is signed in.
         if (user.providerData[0].providerId === 'google.com') {
           const nombre = user.displayName;
-          console.log(nombre, user);
+          const uid = user.uid;
+          console.log(nombre, uid);
+          return nombre && uid;
+        } else {
+          this.firestore.collection<Usuarios>('usuarios').doc(`${user.uid}`).valueChanges().subscribe(resp => {
+            const nombre = resp.nombre;
+            const apellido = resp.apellido;
+            console.log(nombre, apellido);
+            this.nombre = nombre;
+            this.apellido = apellido;
+          });
         }
       }
     });
   }
-  crearUsuario(usuario: Usuarios){
-    // TODO: Verificar que el usuario aun no este registrado.
-    this.firestore.collection('usuarios').add(usuario);
+  agregarUsuario(usuario: Usuarios, uid: string){
+    this.firestore.collection<Usuarios>('usuarios').doc(uid).set(usuario);
+    console.log(usuario);
   }
 }

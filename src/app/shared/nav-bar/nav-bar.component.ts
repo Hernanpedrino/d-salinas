@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
 })
 export class NavBarComponent implements OnInit {
 
-  public usuario;
   public badge: number;
   constructor(private caritoservice: CarritoService,
               private authService: AuthService,
@@ -21,8 +20,7 @@ export class NavBarComponent implements OnInit {
   ngOnInit() {
     this.caritoservice.obtenerPedido().subscribe(items => {
       this.badge = items.length;
-    }),
-    delay(2000);
+    }), delay(2000);
   }
   logout(){
     this.authService.logout().subscribe(resp => {
@@ -39,5 +37,4 @@ export class NavBarComponent implements OnInit {
       });
     });
   }
-
 }
