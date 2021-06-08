@@ -65,6 +65,5 @@ export class IniciarSesionComponent implements OnInit {
   }
   iniciarConGoogle(){
     this.authService.inicioSesionGoogle().subscribe();
-    this.router.navigateByUrl('/home');
   }
 }

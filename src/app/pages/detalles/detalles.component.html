@@ -7,7 +7,7 @@
         <img [src]="idbaldes.imagenes" alt="avatar" class="img-thumbnail">
       </div>
       <div class="col" *ngIf="!cargando">
-        <form [formGroup]="formdet" (ngSubmit)="agregarAlCarrito(formdet)" >
+        <form [formGroup]="formdet" (ngSubmit)="agregarAlCarrito()" >
           <label for="formGroupExampleInput" class="form-label"><h3>Nombre del producto:</h3></label>
           <input type="text" class="form-control" formControlName="nombre" placeholder="" readonly>
           <label for="formGroupExampleInput" class="form-label mt-2"><h3>Descripcion:</h3></label>

@@ -9,29 +9,21 @@ import { Usuarios } from '../models/usuario.model';
 })
 export class UsuariosService {
 
-  public nombre = '';
-  public apellido = '';
   constructor(private firestore: AngularFirestore) { }
   obtenerUsuarioActivo(){
     firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         // No user is signed in.
-        console.log('No hay usuario logueado');
         return;
       } else {
         // User is signed in.
         if (user.providerData[0].providerId === 'google.com') {
-          const nombre = user.displayName;
-          const uid = user.uid;
-          console.log(nombre, uid);
-          return nombre && uid;
+          localStorage.setItem('uid', user.uid);
+          return user;
         } else {
           this.firestore.collection<Usuarios>('usuarios').doc(`${user.uid}`).valueChanges().subscribe(resp => {
-            const nombre = resp.nombre;
-            const apellido = resp.apellido;
-            console.log(nombre, apellido);
-            this.nombre = nombre;
-            this.apellido = apellido;
+            localStorage.setItem('uid', user.uid);
+            return resp;
           });
         }
       }
@@ -40,5 +32,9 @@ export class UsuariosService {
   agregarUsuario(usuario: Usuarios, uid: string){
     this.firestore.collection<Usuarios>('usuarios').doc(uid).set(usuario);
     console.log(usuario);
+  }
+  obtenerUsuarioBd(){
+    const uid = localStorage.getItem('uid');
+    return this.firestore.collection<Usuarios>(`usuarios`).doc(`${uid}`).valueChanges();
   }
 }

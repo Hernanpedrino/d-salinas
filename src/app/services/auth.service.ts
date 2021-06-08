@@ -1,14 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone, } from '@angular/core';
+import { Router } from '@angular/router';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { from } from 'rxjs';
+import { delay } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() {   }
+  constructor(private router: Router,
+              private zone: NgZone
+              ) {   }
   nuevoUsuario(email: string, password: string){
     const createObs$ = firebase.auth().createUserWithEmailAndPassword(email, password);
     const subscription = from(createObs$);
@@ -19,7 +24,6 @@ export class AuthService {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      console.log(user);
       // ...
     })
     .catch((error) => {
@@ -33,32 +37,28 @@ export class AuthService {
   inicioSesionGoogle(){
     const provider = new firebase.auth.GoogleAuthProvider();
     const createObs$ = firebase.auth()
-    .signInWithPopup(provider)
-    .then((result) => {
-      const credential = result.credential;
-      // The signed-in user info.
-      const user = result.user;
-      console.log('Credenciales: ', credential, 'Usuario: ', user);
-      // ...
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      const credential = error.credential;
-      // ...
-      console.log(errorCode, errorMessage, email, credential);
-    });
+    .signInWithPopup(provider);
     const subscription = from(createObs$);
+    this.router.navigateByUrl('/home'), delay(3000);
     return subscription;
   }
   logout(){
+    localStorage.removeItem('uid');
     const createObs$ = firebase.auth().signOut().then(() => {
       // Sign-out successful.
+      Swal.fire({
+        icon: 'success',
+        title: 'Sesion Cerrada',
+        text: 'Muchas gracias por tu visita!'
+      });
+      this.router.navigateByUrl('/home'), delay(9000);
     }).catch((error) => {
       // An error happened.
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text:  `Ocurrio un error al cerrar la sesion: ${error}`
+      });
     });
     const subscription = from(createObs$);
     return subscription;

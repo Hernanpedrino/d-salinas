@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-// import { EmailService } from '../../services/email.service';
 import { AuthService } from '../../services/auth.service';
 import { UsuariosService } from '../../services/usuarios.service';
-import { CarritoService } from '../../services/carrito.service';
-import { Pedidos } from 'src/app/models/pedidos.models';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,14 +12,16 @@ import Swal from 'sweetalert2';
 })
 export class ContactoComponent implements OnInit {
 
-  public arregItems: Pedidos[] = [];
-  // private itemsFb;
   contacto: FormGroup;
+  google: FormGroup;
+  googleForm = false;
   constructor(private fb: FormBuilder,
               private authservice: AuthService,
               private usuarioservice: UsuariosService,
-              private router: Router) {
+              private router: Router,
+              private zone: NgZone) {
               this.crearFormularioContacto();
+              this.crearFormularioGoogle();
             }
   ngOnInit(): void { }
   crearFormularioContacto(){
@@ -33,6 +32,12 @@ export class ContactoComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       direccion: ['', Validators.required],
       email: ['', [Validators.required, Validators.email, Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]]
+    });
+  }
+  crearFormularioGoogle(){
+    this.google = this.fb.group({
+      telefono: ['', [Validators.required, Validators.minLength(7), Validators.pattern(/^\d+$/)]],
+      direccion: ['', Validators.required],
     });
   }
   crearUsuario(){
@@ -66,20 +71,28 @@ export class ContactoComponent implements OnInit {
       }
     );
   }
-  // sendEmail(){
-  //   const templateParams = {
-  //     nombre: this.contacto.get('nombre').value,
-  //     apellido: this.contacto.get('apellido').value,
-  //     telefono: this.contacto.get('telefono').value,
-  //     direccion: this.contacto.get('direccion').value,
-  //     email: this.contacto.get('email').value,
-  //     pedido: this.itemsFb
-  //   };
-  //   // this.emailservice.sendEmail(templateParams);
-  //   this.carritoservice.borrarPedido();
-  //   localStorage.clear();
-  //   this.contacto.reset();
-  // }
+  submitFormGoogle(){
+    this.authservice.inicioSesionGoogle().subscribe(resp => {
+      const uid = resp.user.uid;
+      const datos = {
+        nombre: resp.user.displayName.split(' ')[0],
+        apellido: resp.user.displayName.split(' ')[1],
+        telefono: this.google.get('telefono').value,
+        direccion: this.google.get('direccion').value,
+        email: resp.user.email,
+        google: true
+      };
+      console.log(datos, uid);
+      this.usuarioservice.agregarUsuario(datos, uid);
+      this.zone.run(() => {
+        this.router.navigateByUrl('/home');
+      });
+    });
+
+  }
+  crearUsuarioConGoogle(){
+    this.googleForm = true;
+  }
   // Getters de validaciones
   get nombreInvalido(){
     return this.contacto.get('nombre').invalid && this.contacto.get('nombre').touched;
@@ -119,4 +132,3 @@ export class ContactoComponent implements OnInit {
   }
 
 }
-

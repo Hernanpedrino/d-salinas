@@ -2,7 +2,7 @@
     <div>
       <h2 class="mt-3">Completa tus datos para el registro de clientes</h2>
     </div>
-    <form [formGroup]="contacto" (ngSubmit)="crearUsuario()" id="contacto">
+    <form [formGroup]="contacto" (ngSubmit)="crearUsuario()" id="contacto" *ngIf="googleForm === false">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label>Nombre</label>
@@ -44,7 +44,27 @@
             <span class="text-danger" *ngIf="passwordInvalido === true">Por favor complete este campo</span>
           </div>
         </div>
-        <button type="submit" class="btn btn-success my-3" [disabled]="contacto.invalid">Registrarse &nbsp;<i class="far fa-paper-plane"></i></button>
+        <button type="submit" class="btn btn-success my-3" [disabled]="contacto.invalid">Registrarse &nbsp;<i class="far fa-paper-plane"></i></button>&nbsp;
+        <button type="button" (click)="crearUsuarioConGoogle()" class="btn btn-primary my-3" [disabled]="contacto.valid">Registrarse con Google &nbsp;<i class="fab fa-google"></i></button>
+    </form>
+    <form [formGroup]="google" (ngSubmit)="submitFormGoogle()" id="contacto" *ngIf="googleForm === true">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Direccion</label>
+            <input type="text" class="form-control" formControlName="direccion"
+            [class.is-invalid]="direccionInvalido"
+            [class.is-valid]="direccionValido">
+            <span class="text-danger" *ngIf="direccionInvalido === true">Por favor complete este campo</span>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Telefono</label>
+            <input type="text" class="form-control" formControlName="telefono"
+            [class.is-invalid]="telefonoInvalido"
+            [class.is-valid]="telefonoValido">
+            <span class="text-danger" *ngIf="telefonoInvalido === true">Por favor complete este campo</span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary my-3">Registrarse &nbsp;<i class="fab fa-google"></i></button>
     </form>
 </div>
 <app-footer></app-footer>

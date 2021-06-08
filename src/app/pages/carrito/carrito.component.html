@@ -1,5 +1,5 @@
 
-<table class="table table-hover mt-3" *ngIf="arregItems">
+<table class="table table-hover mt-3">
     <thead>
     <tr>
         <th scope="col" class="col-1">#</th>
@@ -11,32 +11,32 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of arregItems; let i = index">
+    <!-- <tr *ngFor="let item of arregItems; let i = index">
         <th scope="row">{{ i + 1}}</th>
         <td colspan="2">{{ item.nombre }}</td>
         <td colspan="2">{{ item.sabor }}</td>
         <td>{{ item.precio | currency}}</td>
         <td>{{ item.cantidad }}</td>
         <td>{{ item.precio*item.cantidad | currency }}</td>
-    </tr>
+    </tr> -->
     </tbody>
     <tfoot>
     <tr>
         <th scope="row" colspan="5">Total del pedido:</th>
-        <td class="col-2"><strong>{{ subTotal | currency}}</strong></td>
-        <td class="col-2"><button routerLink="/confirmar-pedido" class="btn btn-success" [disabled]="arregItems.length===0">Confirmar Pedido <i class="fas fa-check"></i></button></td>
-        <td class="col-2"><button  class="btn btn-danger" [disabled]="arregItems.length===0" (click)="borrarItem()">Vaciar carrito <i class="fas fa-trash"></i></button></td>
+        <td class="col-2"><strong></strong></td>
+        <td class="col-2"><button routerLink="/confirmar-pedido" class="btn btn-success">Confirmar Pedido <i class="fas fa-check"></i></button></td>
+        <td class="col-2"><button  class="btn btn-danger">Vaciar carrito <i class="fas fa-trash"></i></button></td>
     </tr>
     </tfoot>
 </table>
 
-<div class="alert alert-info text-center" role="alert" *ngIf="!arregItems">
+<div class="alert alert-info text-center" role="alert">
     Por favor seleccione algun producto.
 </div>
 <div class="d-grid gap-2 col-6 mx-auto mt-3 mb-3">
     <a routerLink="" class="btn btn-primary" type="button">Continuar Comprando  <i class="fas fa-cart-plus"></i></a>
 </div>
-<div class="alert alert-info text-center" role="alert" *ngIf="arregItems">
+<div class="alert alert-info text-center" role="alert">
    Radio de envio del pedido. Si el pedido es realizado antes de las 14 hs se entrega en el dia.
    Caso contrario se entregara al dia siguiente.
    Los pedidos se abonan en la entrega.

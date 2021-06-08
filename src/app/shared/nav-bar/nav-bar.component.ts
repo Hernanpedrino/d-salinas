@@ -12,29 +12,28 @@ import Swal from 'sweetalert2';
 })
 export class NavBarComponent implements OnInit {
 
+  private uid = '';
   public badge: number;
+  public nombre = '';
+  public apellido = '';
+  public usuario = false;
   constructor(private caritoservice: CarritoService,
               private authService: AuthService,
               private usuariosService: UsuariosService) {
   }
   ngOnInit() {
-    this.caritoservice.obtenerPedido().subscribe(items => {
-      this.badge = items.length;
-    }), delay(2000);
+    // this.caritoservice.obtenerPedido().subscribe(items => {
+    //   this.badge = items.length;
+    // }), delay(3000);
+    this.usuariosService.obtenerUsuarioBd()
+    .subscribe(resp => {
+      this.nombre = resp.nombre;
+      this.apellido = resp.apellido;
+      this.usuario = true;
+    });
   }
   logout(){
-    this.authService.logout().subscribe(resp => {
-      Swal.fire({
-        icon: 'success',
-        title: 'Sesion Cerrada',
-        text: 'Muchas gracias por tu visita!'
-      });
-    }, error => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text:  `Ocurrio un error al cerrar la sesion: ${error}`
-      });
-    });
+    this.authService.logout().subscribe(), delay(3000);
+    this.usuario = false;
   }
 }

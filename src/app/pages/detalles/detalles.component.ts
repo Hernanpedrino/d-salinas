@@ -39,21 +39,43 @@ export class DetallesComponent implements OnInit {
         this.cargando = false;
     });
   }
-  agregarAlCarrito(formdet){
+  agregarAlCarrito(){
     if (this.formdet.controls.sabor.value === 'Seleccione un sabor' || this.formdet.controls.cantidad.value === 'Cantidad a comprar'){
       Swal.fire({
         icon: 'warning',
         title: 'Por favor seleccione un sabor y la cantidad a comprar',
       });
     }else{
-      Swal.fire({
-        icon: 'success',
-        title: 'Producto agregado al carrito',
-        showConfirmButton: false,
-        timer: 2000
-      }),
-      this.carritoservice.agregarItemPedido(formdet.value);
-      this.router.navigate(['/carrito']);
+      const datos = {
+        items: {
+          0: {
+            cantidad: this.formdet.get('cantidad').value,
+            descripcion: this.formdet.get('descripcion').value,
+            precio: this.formdet.get('precio').value,
+            sabor: this.formdet.get('sabor').value
+          }
+        }
+      };
+      if (this.carritoservice.agregarPedido.length === null) {
+        this.carritoservice.agregarPedido(datos);
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto agregado al carrito',
+          showConfirmButton: false,
+          timer: 2000
+        }),
+        console.log(datos);
+        this.router.navigate(['/carrito']);
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto agregado al carrito',
+          showConfirmButton: false,
+          timer: 2000
+        }),
+        console.log(datos);
+        this.router.navigate(['/carrito']);
+      }
     }
   }
 }
