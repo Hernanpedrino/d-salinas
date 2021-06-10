@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { from } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -39,7 +38,7 @@ export class AuthService {
     const createObs$ = firebase.auth()
     .signInWithPopup(provider);
     const subscription = from(createObs$);
-    this.router.navigateByUrl('/home'), delay(3000);
+    this.router.navigateByUrl('/home');
     return subscription;
   }
   logout(){
@@ -51,7 +50,7 @@ export class AuthService {
         title: 'Sesion Cerrada',
         text: 'Muchas gracias por tu visita!'
       });
-      this.router.navigateByUrl('/home'), delay(9000);
+      this.router.navigateByUrl('/home');
     }).catch((error) => {
       // An error happened.
       Swal.fire({

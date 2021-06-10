@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Pedidos } from '../models/pedidos.models';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,13 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 export class CarritoService {
   constructor(private firestore: AngularFirestore ) { }
-  agregarPedido(pedido: any){
-    const uid = localStorage.getItem('uid');
-    let pedidoId = 0;
-    if (this.firestore.collection(`usuarios/${uid}/pedidos`).valueChanges.length > 0) {
-      pedidoId = this.firestore.collection(`usuarios/${uid}/pedidos`).valueChanges.length + 1;
+  agregarPedido(pedido: Pedidos){
+    const pedidoRef = this.firestore.collection('usuarios/pedidos/0');
+    const itemRef = this.firestore.collection('usuarios/pedidos/0/items/0');
+    if (pedidoRef.snapshotChanges.length === null){
+      this.firestore.collection(`${itemRef}/item`).doc('0').set(`${pedido}`);
     }
-    return this.firestore.collection(`usuarios/${uid}/pedidos`).doc(`${pedidoId}`).set(pedido);
+    return this.firestore.collection(``)
   }
 }
 // TODO: Solucionar la forma de registrar el pedido para poder obtenerlo de mejor forma.

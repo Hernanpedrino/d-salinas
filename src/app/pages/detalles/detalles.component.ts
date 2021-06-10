@@ -47,14 +47,10 @@ export class DetallesComponent implements OnInit {
       });
     }else{
       const datos = {
-        items: {
-          0: {
-            cantidad: this.formdet.get('cantidad').value,
-            descripcion: this.formdet.get('descripcion').value,
-            precio: this.formdet.get('precio').value,
-            sabor: this.formdet.get('sabor').value
-          }
-        }
+        cantidad: this.formdet.get('cantidad').value,
+        descripcion: this.formdet.get('descripcion').value,
+        precio: this.formdet.get('precio').value,
+        sabor: this.formdet.get('sabor').value
       };
       if (this.carritoservice.agregarPedido.length === null) {
         this.carritoservice.agregarPedido(datos);
