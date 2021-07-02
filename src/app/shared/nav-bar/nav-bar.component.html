@@ -21,7 +21,7 @@
               <li><a class="dropdown-item text-white" routerLink="/productos-sin-tacc">Productos sin TACC</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown" *ngIf="usuario === false">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-white" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Mi cuenta
             </a>
@@ -30,17 +30,16 @@
               <li><a class="dropdown-item text-white" routerLink="/registrarse">Registrarse</a></li>
             </ul>
           </li>
-          <li class="nav-item dropdown" *ngIf="usuario">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-white" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ nombre | titlecase }} {{ apellido | titlecase }}
             </a>
             <ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item text-white">Mi Perfil</a></li>
-              <li><button class="dropdown-item text-white" type="button" (click)="logout()">Cerrar Sesion</button></li>
+              <li><button class="dropdown-item text-white" type="button" >Cerrar Sesion</button></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a routerLink = "/carrito"><img src="../../../assets/cart3.svg" alt="carrito" width="40" height="40"><span class="badge rounded-pill bg-danger" *ngIf="badge > 0">{{ badge }}</span></a>
+            <a routerLink = "/carrito"><img src="../../../assets/cart3.svg" alt="carrito" width="40" height="40"><span class="badge rounded-pill bg-danger">1</span></a>
           </li>
         </ul>
       </div>

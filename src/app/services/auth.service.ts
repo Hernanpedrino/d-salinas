@@ -1,66 +1,45 @@
-import { Injectable, NgZone, } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { from } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
+const provider = new firebase.auth.GoogleAuthProvider();
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private router: Router,
-              private zone: NgZone
-              ) {   }
-  nuevoUsuario(email: string, password: string){
-    const createObs$ = firebase.auth().createUserWithEmailAndPassword(email, password);
-    const subscription = from(createObs$);
-    return subscription;
+  constructor(private router: Router) {   }
+  // Creacion de usuario e inicio sesion con Google.
+  iniciarConGoogle(){
+    const obs$ = firebase.auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        const credential = result.credential as firebase.auth.OAuthCredential;
+        // The signed-in user info.
+        const user = firebase.auth().currentUser;
+        const idToken = credential.idToken;
+        console.log(user, idToken, 'Aca ya tenemos el token');
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        const credential = error.credential;
+        // ...
+        console.log(errorCode, errorMessage, email, credential, 'Errores en google auth');
+  });
+    const subcription = from(obs$);
+    return subcription;
   }
-  inicioSesionConEmailPassword(email: string, password: string){
-    const createObs$ = firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
-    const subscription = from(createObs$);
-    return subscription;
-  }
-  inicioSesionGoogle(){
-    const provider = new firebase.auth.GoogleAuthProvider();
-    const createObs$ = firebase.auth()
-    .signInWithPopup(provider);
-    const subscription = from(createObs$);
-    this.router.navigateByUrl('/home');
-    return subscription;
-  }
-  logout(){
-    localStorage.removeItem('uid');
-    const createObs$ = firebase.auth().signOut().then(() => {
-      // Sign-out successful.
-      Swal.fire({
-        icon: 'success',
-        title: 'Sesion Cerrada',
-        text: 'Muchas gracias por tu visita!'
-      });
-      this.router.navigateByUrl('/home');
-    }).catch((error) => {
-      // An error happened.
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text:  `Ocurrio un error al cerrar la sesion: ${error}`
-      });
-    });
-    const subscription = from(createObs$);
-    return subscription;
-  }
+
 }
 
+// TODO: Hay que procesar el toquen y guardarlo en el usuario de base de datos.
+// Ademas hay que guardar la informacion del perfil.

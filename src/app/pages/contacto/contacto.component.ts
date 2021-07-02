@@ -40,55 +40,10 @@ export class ContactoComponent implements OnInit {
       direccion: ['', Validators.required],
     });
   }
-  crearUsuario(){
-    const password = this.contacto.get('password').value;
-    const datos = {
-      nombre: this.contacto.get('nombre').value,
-      apellido: this.contacto.get('apellido').value,
-      telefono: this.contacto.get('telefono').value,
-      direccion: this.contacto.get('direccion').value,
-      email: this.contacto.get('email').value,
-      google: false
-    };
-    this.authservice.nuevoUsuario(datos.email, password).subscribe(
-      resp => {
-        Swal.fire({
-          icon: 'info',
-          title: 'Registrando usuario',
-          text: 'Espere por favor'
-        });
-        Swal.showLoading();
-        const uid = resp.user.uid;
-        this.usuarioservice.agregarUsuario(datos, uid);
-        this.router.navigateByUrl('/login');
-        Swal.close();
-      }, (err) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: err.error.error.message
-        });
-      }
-    );
-  }
   submitFormGoogle(){
-    this.authservice.inicioSesionGoogle().subscribe(resp => {
-      const uid = resp.user.uid;
-      const datos = {
-        nombre: resp.user.displayName.split(' ')[0],
-        apellido: resp.user.displayName.split(' ')[1],
-        telefono: this.google.get('telefono').value,
-        direccion: this.google.get('direccion').value,
-        email: resp.user.email,
-        google: true
-      };
-      console.log(datos, uid);
-      this.usuarioservice.agregarUsuario(datos, uid);
-      this.zone.run(() => {
-        this.router.navigateByUrl('/home');
-      });
-    });
-
+    this.authservice
+    .iniciarConGoogle()
+    .subscribe();
   }
   crearUsuarioConGoogle(){
     this.googleForm = true;

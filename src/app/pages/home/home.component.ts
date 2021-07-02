@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
               private usuariosService: UsuariosService) { }
 
   ngOnInit() {
-    this.usuariosService.obtenerUsuarioActivo();
   }
   verTodo(){
     combineLatest([

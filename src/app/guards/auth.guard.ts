@@ -1,15 +1,15 @@
 // import { Injectable } from '@angular/core';
 // import { CanActivate } from '@angular/router';
-// import { AuthService } from '../services/auth.service';
+// import { UsuariosService } from '../services/usuarios.service';
 
 // @Injectable({
 //   providedIn: 'root'
 // })
 // export class AuthGuard implements CanActivate {
 
-//   constructor(private authservice: AuthService){}
+//   constructor(private usuarioSerivce: UsuariosService){}
 //   canActivate(): boolean  {
-//     return this.authservice.usuarioAutenticado();
+//     return this.usuarioSerivce.usuarioAutenticado();
 //   }
 
 // }

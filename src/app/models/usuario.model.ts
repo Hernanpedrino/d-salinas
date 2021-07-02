@@ -5,6 +5,7 @@ export class Usuarios{
         public apellido: string,
         public direccion: string,
         public email: string,
+        public idToken: string,
         public telefono: number,
         public google: boolean
     ){}
