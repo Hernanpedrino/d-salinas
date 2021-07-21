@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { from } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { UsuariosService } from './usuarios.service';
+import { environment } from '../../environments/environment';
 
 const provider = new firebase.auth.GoogleAuthProvider();
 @Injectable({
@@ -12,18 +12,34 @@ const provider = new firebase.auth.GoogleAuthProvider();
 })
 export class AuthService {
 
-  constructor(private router: Router) {   }
+  constructor(private usuariosService: UsuariosService) {   }
   // Creacion de usuario e inicio sesion con Google.
-  iniciarConGoogle(){
+  iniciarConGoogle(direccion, telefono){
     const obs$ = firebase.auth()
       .signInWithPopup(provider)
       .then((result) => {
         const credential = result.credential as firebase.auth.OAuthCredential;
         // The signed-in user info.
-        const user = firebase.auth().currentUser;
-        const idToken = credential.idToken;
-        console.log(user, idToken, 'Aca ya tenemos el token');
+        const user = {
+          nombre: result.user.displayName,
+          email: result.user.email,
+          google: true,
+          direccion,
+          telefono
+        };
+        const uid = result.user.uid;
         // ...
+        const idToken = credential.idToken;
+        this.usuariosService.guardarUsuario(idToken, user, uid);
+        Swal.fire({
+          title: 'Registrado',
+          text: 'Usuario registrado correctamente',
+          icon: 'success',
+          allowOutsideClick: false
+        }).then(() => {
+          Swal.close();
+          window.open(`${environment.urlsInternas.home}`, '_top');
+        });
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
@@ -38,8 +54,38 @@ export class AuthService {
     const subcription = from(obs$);
     return subcription;
   }
-
+  registroEmailPassword(email, password){
+    const obs$ = firebase.auth()
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+    // Signed in
+    const user = userCredential.user;
+    const uid = user.uid;
+    localStorage.setItem('uid', uid);
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode, errorMessage);
+  });
+    const subcription = from(obs$);
+    return subcription;
+  }
+  logInEmailPassword(email, password){
+    const obs$ = firebase.auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      const user = userCredential.user;
+      // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  });
+    const subcription = from(obs$);
+    return subcription;
+  }
 }
+// TODO: Crear el metodo para registrar usuario con correo y contraseña.
 
-// TODO: Hay que procesar el toquen y guardarlo en el usuario de base de datos.
-// Ademas hay que guardar la informacion del perfil.

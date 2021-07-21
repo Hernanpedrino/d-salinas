@@ -19,6 +19,10 @@ export const environment = {
     userId: 'user_StYp1VuV1vfLde44fjqVJ',
     accessToken: '2e5da7ac3b38e816a773e1790840fb68',
   },
+  urlsInternas: {
+    home: 'http://localhost:4200/#/home',
+    carrito: 'http://localhost:4200/#/carrito'
+  }
 };
 
 /*

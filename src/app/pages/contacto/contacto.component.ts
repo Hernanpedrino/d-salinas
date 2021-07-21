@@ -1,9 +1,10 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-contacto',
@@ -18,8 +19,7 @@ export class ContactoComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private authservice: AuthService,
               private usuarioservice: UsuariosService,
-              private router: Router,
-              private zone: NgZone) {
+              private router: Router) {
               this.crearFormularioContacto();
               this.crearFormularioGoogle();
             }
@@ -41,12 +41,40 @@ export class ContactoComponent implements OnInit {
     });
   }
   submitFormGoogle(){
+    const direccion = this.google.get('direccion').value;
+    const telefono = this.google.get('telefono').value;
     this.authservice
-    .iniciarConGoogle()
+    .iniciarConGoogle(direccion, telefono)
     .subscribe();
   }
   crearUsuarioConGoogle(){
     this.googleForm = true;
+  }
+  // Logueo con email y password
+  submitFormEyP(){
+    const email = this.contacto.get('email').value;
+    const password = this.contacto.get('password').value;
+    const user = {
+      nombre: `${this.contacto.get('nombre').value} ${this.contacto.get('apellido').value}`,
+      email: this.contacto.get('email').value,
+      google: false,
+      direccion: this.contacto.get('direccion').value,
+      telefono: this.contacto.get('telefono').value
+    };
+    this.authservice.registroEmailPassword(email, password)
+    .subscribe();
+    const uid = localStorage.getItem('uid');
+    Swal.fire({
+      title: 'Registrado',
+      text: 'Usuario registrado correctamente',
+      icon: 'success',
+      allowOutsideClick: false
+    }).then(() => {
+      this.usuarioservice.guardarUsuario('null', user, uid);
+      localStorage.removeItem('uid');
+      Swal.close();
+      window.open(`${environment.urlsInternas.home}`, '_top');
+    });
   }
   // Getters de validaciones
   get nombreInvalido(){
@@ -64,8 +92,14 @@ export class ContactoComponent implements OnInit {
   get direccionInvalido(){
     return this.contacto.get('direccion').invalid && this.contacto.get('direccion').touched;
   }
+  get direccionInvalidoGoogle(){
+    return this.google.get('direccion').invalid && this.google.get('direccion').touched;
+  }
   get direccionValido(){
     return this.contacto.get('direccion').valid;
+  }
+  get direccionValidoGoogle(){
+    return this.google.get('direccion').valid;
   }
   get emailInvalido(){
     return this.contacto.get('email').invalid && this.contacto.get('email').touched;
@@ -76,8 +110,14 @@ export class ContactoComponent implements OnInit {
   get telefonoInvalido(){
     return this.contacto.get('telefono').invalid && this.contacto.get('telefono').touched;
   }
+  get telefonoInvalidoGoogle(){
+    return this.google.get('telefono').invalid && this.google.get('telefono').touched;
+  }
   get telefonoValido(){
     return this.contacto.get('telefono').valid;
+  }
+  get telefonoValidoGoogle(){
+    return this.google.get('telefono').valid;
   }
   get passwordInvalido(){
     return this.contacto.get('password').invalid && this.contacto.get('password').touched;
@@ -87,3 +127,4 @@ export class ContactoComponent implements OnInit {
   }
 
 }
+// TODO: Poner las urls en los environments para poder redireccionar
