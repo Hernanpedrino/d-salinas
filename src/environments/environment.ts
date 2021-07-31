@@ -21,7 +21,9 @@ export const environment = {
   },
   urlsInternas: {
     home: 'http://localhost:4200/#/home',
-    carrito: 'http://localhost:4200/#/carrito'
+    iniciarSesion: 'http://localhost:4200/#/iniciar-sesion',
+    carrito: 'http://localhost:4200/#/carrito',
+    registrarse: 'http://localhost:4200/#/registrarse'
   }
 };
 

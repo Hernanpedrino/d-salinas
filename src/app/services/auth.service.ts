@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { from } from 'rxjs';
@@ -12,9 +13,11 @@ const provider = new firebase.auth.GoogleAuthProvider();
 })
 export class AuthService {
 
-  constructor(private usuariosService: UsuariosService) {   }
+  private url = 'https://identitytoolkit.googleapis.com/v1';
+  constructor(private usuariosService: UsuariosService,
+              private http: HttpClient) {   }
   // Creacion de usuario e inicio sesion con Google.
-  iniciarConGoogle(direccion, telefono){
+  registrarConGoogle(direccion, telefono){
     const obs$ = firebase.auth()
       .signInWithPopup(provider)
       .then((result) => {
@@ -28,7 +31,6 @@ export class AuthService {
           telefono
         };
         const uid = result.user.uid;
-        // ...
         const idToken = credential.idToken;
         this.usuariosService.guardarUsuario(idToken, user, uid);
         Swal.fire({
@@ -54,38 +56,67 @@ export class AuthService {
     const subcription = from(obs$);
     return subcription;
   }
-  registroEmailPassword(email, password){
+  iniciarConGoogle(){
     const obs$ = firebase.auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-    // Signed in
-    const user = userCredential.user;
-    const uid = user.uid;
-    localStorage.setItem('uid', uid);
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode, errorMessage);
+      .signInWithPopup(provider)
+      .then((result) => {
+        const credential = result.credential as firebase.auth.OAuthCredential;
+        // The signed-in user info.
+        window.open(`${environment.urlsInternas.home}`, '_top');
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        const credential = error.credential;
+        // ...
+        console.log(errorCode, errorMessage, email, credential, 'Errores en google auth');
   });
     const subcription = from(obs$);
     return subcription;
+  }
+
+  registroEmailPassword(email: string, password: string){
+    const authData = {
+      email,
+      password,
+      returnSecureToken: true
+    };
+    return this.http.post(
+      `${this.url}/accounts:signUp?key=${environment.firebase.apiKey}`,
+      authData
+    );
   }
   logInEmailPassword(email, password){
-    const obs$ = firebase.auth()
-    .signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in
-      const user = userCredential.user;
-      // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
-    const subcription = from(obs$);
-    return subcription;
+    const authData = {
+      email,
+      password
+    };
+    return this.http.post(
+      `${this.url}/accounts:signInWithPassword?key=${environment.firebase.apiKey}`,
+      authData
+    );
+  }
+  sesionActiva(){
+    
+  }
+  logOut(){
+    firebase.auth()
+    .signOut()
+    .then(() => {
+      // Sign-out successful.
+      Swal.fire({
+        title: 'Sesion cerrada',
+        text: 'Muchas gracias por tu visita',
+        icon: 'success',
+        allowOutsideClick: false
+      });
+      window.open(`${environment.urlsInternas.home}`, '_top');
+    }).catch((error) => {
+      // An error happened.
+    });
   }
 }
-// TODO: Crear el metodo para registrar usuario con correo y contraseña.
 

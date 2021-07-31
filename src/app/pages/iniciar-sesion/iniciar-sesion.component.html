@@ -1,6 +1,6 @@
 <div class="container">
     <h1 class="text-center mt-4">Iniciar Sesion</h1>
-    <form [formGroup]="inicioSesion">
+    <form [formGroup]="inicioSesion" (ngSubmit)="iniciarSesion()">
         <div class="row justify-content-center mt-4">
             <div class="col-6">
                 <div class="input-group mb-3">
@@ -14,7 +14,7 @@
                 </div>
                 <div class="d-grid gap-2">
                     <button class="btn btn-outline-primary" type="submit">Iniciar sesion</button>
-                    <button class="btn btn-outline-success" type="button" >Iniciar Sesion con Google</button>
+                    <button class="btn btn-outline-success" type="button" (click)="iniciarSesionGoogle()">Iniciar Sesion con Google</button>
                 </div>
             </div>
             <div class="row justify-content-center mt-4">

@@ -16,5 +16,13 @@ export class NavBarComponent implements OnInit {
               private usuariosService: UsuariosService) {
   }
   ngOnInit() {
+    const uid = localStorage.getItem('uid');
+    this.usuariosService.obtenerUsuario(uid).subscribe( resp => {
+      const usuario = Object.values(resp)[1];
+      const nombre = usuario.nombre;
+    });
+  }
+  logOut(){
+    this.authService.logOut();
   }
 }

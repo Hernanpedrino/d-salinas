@@ -18,7 +18,16 @@ export class UsuariosService {
         idtoken: idToken,
         usuario
       });
-    const subcription = from(obs$);
-    return subcription;
+    const subscription = from(obs$);
+    return subscription;
+  }
+  obtenerUsuario(uid) {
+    // Antes de obtener el usuario verificar si hay sesion
+    const obs$ = this.firestore
+    .collection('usuarios')
+    .doc(`${uid}`)
+    .valueChanges();
+    const subscription = from(obs$);
+    return subscription;
   }
 }

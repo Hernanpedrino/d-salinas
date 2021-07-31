@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import Swal from 'sweetalert2';
@@ -13,13 +12,14 @@ import { environment } from '../../../environments/environment';
 })
 export class ContactoComponent implements OnInit {
 
+  uid: string;
+  idToken: string;
   contacto: FormGroup;
   google: FormGroup;
   googleForm = false;
   constructor(private fb: FormBuilder,
               private authservice: AuthService,
-              private usuarioservice: UsuariosService,
-              private router: Router) {
+              private usuarioservice: UsuariosService) {
               this.crearFormularioContacto();
               this.crearFormularioGoogle();
             }
@@ -44,7 +44,7 @@ export class ContactoComponent implements OnInit {
     const direccion = this.google.get('direccion').value;
     const telefono = this.google.get('telefono').value;
     this.authservice
-    .iniciarConGoogle(direccion, telefono)
+    .registrarConGoogle(direccion, telefono)
     .subscribe();
   }
   crearUsuarioConGoogle(){
@@ -61,19 +61,22 @@ export class ContactoComponent implements OnInit {
       direccion: this.contacto.get('direccion').value,
       telefono: this.contacto.get('telefono').value
     };
-    this.authservice.registroEmailPassword(email, password)
-    .subscribe();
-    const uid = localStorage.getItem('uid');
+    this.authservice
+    .registroEmailPassword(email, password)
+    .subscribe(resp => {
+      this.uid = Object.values(resp)[5];
+      this.idToken = Object.values(resp)[1];
+    });
+    // TODO: Revisar la forma de grabar en bd para ver la sincronizacion
     Swal.fire({
       title: 'Registrado',
       text: 'Usuario registrado correctamente',
       icon: 'success',
       allowOutsideClick: false
     }).then(() => {
-      this.usuarioservice.guardarUsuario('null', user, uid);
-      localStorage.removeItem('uid');
       Swal.close();
-      window.open(`${environment.urlsInternas.home}`, '_top');
+      window.open(`${environment.urlsInternas.iniciarSesion}`, '_top');
+      this.usuarioservice.guardarUsuario(this.idToken, user, this.uid).subscribe();
     });
   }
   // Getters de validaciones
@@ -127,4 +130,3 @@ export class ContactoComponent implements OnInit {
   }
 
 }
-// TODO: Poner las urls en los environments para poder redireccionar
