@@ -6,6 +6,19 @@ export class Pedidos{
         public sabor: string
     ){}
 }
-
+//     arreglo de pedidos:
+//     pedidos[
+//         {
+//             items[
+//                 {
+//                     cantidad: number,
+//                     descripcion: string,
+//                     precio: number,
+//                     sabor: string
+//                 }
+//             ]
+//         }
+//     ]
+//     asi tiene que grabarse en bd
 
 

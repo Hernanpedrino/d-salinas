@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CarritoService } from '../../services/carrito.service';
 import { AuthService } from '../../services/auth.service';
-import { UsuariosService } from '../../services/usuarios.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,18 +8,27 @@ import Swal from 'sweetalert2';
 })
 export class NavBarComponent implements OnInit {
 
-  constructor(private caritoservice: CarritoService,
-              private authService: AuthService,
-              private usuariosService: UsuariosService) {
+  public nombre: string;
+  public cantidadCarrito = [];
+  constructor(private authService: AuthService) {
   }
   ngOnInit() {
-    const uid = localStorage.getItem('uid');
-    this.usuariosService.obtenerUsuario(uid).subscribe( resp => {
-      const usuario = Object.values(resp)[1];
-      const nombre = usuario.nombre;
-    });
+    this.obtenerNombre();
+    this.pedidoEnCarrito();
   }
   logOut(){
     this.authService.logOut();
+    this.nombre = '';
+  }
+  obtenerNombre(){
+    const nombreLs = localStorage.getItem('nombre');
+    if (nombreLs) {
+      this.nombre = nombreLs;
+    }
+  }
+  pedidoEnCarrito(){
+    if (localStorage.getItem('pedido')) {
+      this.cantidadCarrito = JSON.parse(localStorage.getItem('pedido'));
+    }
   }
 }

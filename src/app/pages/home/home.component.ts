@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { Helados } from 'src/app/models/helados.model';
 import { HeladosService } from '../../services/helados.service';
-import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-home',
@@ -15,8 +14,7 @@ export class HomeComponent implements OnInit {
   golosinas: Helados[] = [];
   tacc: Helados[] = [];
   productos: Helados[] = [];
-  constructor(private heladosservice: HeladosService,
-              private usuariosService: UsuariosService) { }
+  constructor(private heladosservice: HeladosService) { }
 
   ngOnInit() {
   }

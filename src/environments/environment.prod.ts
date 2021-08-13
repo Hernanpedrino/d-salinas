@@ -16,9 +16,9 @@ export const environment = {
     accessToken: '2e5da7ac3b38e816a773e1790840fb68',
   },
   urlsInternas: {
-    home: 'https://distribuidora-salinas.firebaseapp.com/#/home',
-    iniciarSesion: 'https://distribuidora-salinas.firebaseapp.com/#/iniciar-sesion',
-    carrito: 'https://distribuidora-salinas.firebaseapp.com/#/carrito',
-    registrarse: 'https://distribuidora-salinas.firebaseapp.com/#/registrarse'
+    home: 'https://distribuidora-salinas.web.app/#/home',
+    iniciarSesion: 'https://distribuidora-salinas.web.app/#/iniciar-sesion',
+    carrito: 'https://distribuidora-salinas.web.app/#/carrito',
+    registrarse: 'https://distribuidora-salinas.web.app/#/registrarse'
   },
 };

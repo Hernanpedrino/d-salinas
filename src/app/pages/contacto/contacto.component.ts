@@ -51,6 +51,7 @@ export class ContactoComponent implements OnInit {
     this.googleForm = true;
   }
   // Logueo con email y password
+  // TODO: Verificar que no se encuentre registrado el mail en bd antes de grabar
   submitFormEyP(){
     const email = this.contacto.get('email').value;
     const password = this.contacto.get('password').value;
@@ -67,7 +68,6 @@ export class ContactoComponent implements OnInit {
       this.uid = Object.values(resp)[5];
       this.idToken = Object.values(resp)[1];
     });
-    // TODO: Revisar la forma de grabar en bd para ver la sincronizacion
     Swal.fire({
       title: 'Registrado',
       text: 'Usuario registrado correctamente',

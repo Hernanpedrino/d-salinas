@@ -32,6 +32,9 @@ export class AuthService {
         };
         const uid = result.user.uid;
         const idToken = credential.idToken;
+        const nombre = result.user.displayName;
+        localStorage.setItem('uid', uid);
+        localStorage.setItem('nombre', nombre);
         this.usuariosService.guardarUsuario(idToken, user, uid);
         Swal.fire({
           title: 'Registrado',
@@ -41,6 +44,7 @@ export class AuthService {
         }).then(() => {
           Swal.close();
           window.open(`${environment.urlsInternas.home}`, '_top');
+          window.location.reload();
         });
       }).catch((error) => {
         // Handle Errors here.
@@ -57,12 +61,25 @@ export class AuthService {
     return subcription;
   }
   iniciarConGoogle(){
+    // TODO: Filtrar previamente que el mail se encuentre registrado en bd
     const obs$ = firebase.auth()
       .signInWithPopup(provider)
       .then((result) => {
-        const credential = result.credential as firebase.auth.OAuthCredential;
+        // const credential = result.credential as firebase.auth.OAuthCredential;
         // The signed-in user info.
-        window.open(`${environment.urlsInternas.home}`, '_top');
+        const uid = result.user.uid;
+        const nombre = result.user.displayName;
+        localStorage.setItem('uid', uid);
+        localStorage.setItem('nombre', nombre);
+        Swal.fire({
+          title: 'Bienvenido a Distribuidora Salinas',
+          icon: 'success',
+          allowOutsideClick: false
+        }).then(() => {
+          Swal.close();
+          window.open(`${environment.urlsInternas.home}`, '_top');
+          window.location.reload();
+        });
       }).catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
@@ -99,9 +116,6 @@ export class AuthService {
       authData
     );
   }
-  sesionActiva(){
-    
-  }
   logOut(){
     firebase.auth()
     .signOut()
@@ -114,6 +128,7 @@ export class AuthService {
         allowOutsideClick: false
       });
       window.open(`${environment.urlsInternas.home}`, '_top');
+      localStorage.clear();
     }).catch((error) => {
       // An error happened.
     });

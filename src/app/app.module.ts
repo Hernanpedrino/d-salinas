@@ -12,6 +12,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
+import { DataTablesModule } from 'angular-datatables';
 
 // Componentes
 import { AppComponent } from './app.component';
@@ -33,6 +34,7 @@ import { MainComponent } from './pages/main.component';
     AngularFirestoreModule,
     PagesModule,
     SharedModule,
+    DataTablesModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
