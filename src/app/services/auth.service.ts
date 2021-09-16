@@ -34,6 +34,7 @@ export class AuthService {
         const idToken = credential.idToken;
         const nombre = result.user.displayName;
         localStorage.setItem('uid', uid);
+        localStorage.setItem('usuario', JSON.stringify(user));
         localStorage.setItem('nombre', nombre);
         this.usuariosService.guardarUsuario(idToken, user, uid);
         Swal.fire({
@@ -61,7 +62,6 @@ export class AuthService {
     return subcription;
   }
   iniciarConGoogle(){
-    // TODO: Filtrar previamente que el mail se encuentre registrado en bd
     const obs$ = firebase.auth()
       .signInWithPopup(provider)
       .then((result) => {
@@ -69,16 +69,36 @@ export class AuthService {
         // The signed-in user info.
         const uid = result.user.uid;
         const nombre = result.user.displayName;
-        localStorage.setItem('uid', uid);
-        localStorage.setItem('nombre', nombre);
-        Swal.fire({
-          title: 'Bienvenido a Distribuidora Salinas',
-          icon: 'success',
-          allowOutsideClick: false
-        }).then(() => {
-          Swal.close();
-          window.open(`${environment.urlsInternas.home}`, '_top');
-          window.location.reload();
+        this.usuariosService.obtenerUsuario(uid).subscribe(resp => {
+          if (resp){
+            const datosUsuario = {
+              // tslint:disable-next-line: no-string-literal
+              usuario: resp['usuario']
+            };
+            localStorage.setItem('uid', uid);
+            localStorage.setItem('nombre', nombre);
+            localStorage.setItem('usuario', JSON.stringify(datosUsuario));
+            Swal.fire({
+              title: 'Bienvenido a Distribuidora Salinas',
+              icon: 'success',
+              allowOutsideClick: false
+            }).then(() => {
+              Swal.close();
+              window.open(`${environment.urlsInternas.home}`, '_top');
+              window.location.reload();
+            });
+          } else {
+            Swal.fire({
+              title: 'Usuario no registrado',
+              text: 'Por favor complete el formulario de registro',
+              icon: 'error',
+              allowOutsideClick: false
+            }).then(() => {
+              Swal.close();
+              window.open(`${environment.urlsInternas.registrarse}`, '_top');
+              window.location.reload();
+            });
+          }
         });
       }).catch((error) => {
         // Handle Errors here.
@@ -115,6 +135,17 @@ export class AuthService {
       `${this.url}/accounts:signInWithPassword?key=${environment.firebase.apiKey}`,
       authData
     );
+  }
+  usuarioAutenticado(): boolean {
+    const user = firebase.auth().currentUser;
+    if (user) {
+    // User is signed in, see docs for a list of available properties
+    // TODO: Aca verificar el token y la sesion
+      return true;
+    } else {
+    // No user is signed in.
+      return false;
+    }
   }
   logOut(){
     firebase.auth()

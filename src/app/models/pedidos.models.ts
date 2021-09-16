@@ -3,22 +3,9 @@ export class Pedidos{
         public cantidad: number,
         public descripcion: string,
         public precio: number,
-        public sabor: string
+        public sabor: string,
+        public fecha: string
     ){}
 }
-//     arreglo de pedidos:
-//     pedidos[
-//         {
-//             items[
-//                 {
-//                     cantidad: number,
-//                     descripcion: string,
-//                     precio: number,
-//                     sabor: string
-//                 }
-//             ]
-//         }
-//     ]
-//     asi tiene que grabarse en bd
 
 

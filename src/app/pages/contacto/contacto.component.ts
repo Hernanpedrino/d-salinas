@@ -51,7 +51,6 @@ export class ContactoComponent implements OnInit {
     this.googleForm = true;
   }
   // Logueo con email y password
-  // TODO: Verificar que no se encuentre registrado el mail en bd antes de grabar
   submitFormEyP(){
     const email = this.contacto.get('email').value;
     const password = this.contacto.get('password').value;
@@ -67,16 +66,26 @@ export class ContactoComponent implements OnInit {
     .subscribe(resp => {
       this.uid = Object.values(resp)[5];
       this.idToken = Object.values(resp)[1];
-    });
-    Swal.fire({
-      title: 'Registrado',
-      text: 'Usuario registrado correctamente',
-      icon: 'success',
-      allowOutsideClick: false
-    }).then(() => {
-      Swal.close();
-      window.open(`${environment.urlsInternas.iniciarSesion}`, '_top');
-      this.usuarioservice.guardarUsuario(this.idToken, user, this.uid).subscribe();
+      Swal.fire({
+        title: 'Registrado',
+        text: 'Usuario registrado correctamente',
+        icon: 'success',
+        allowOutsideClick: false
+      }).then(() => {
+        Swal.close();
+        window.open(`${environment.urlsInternas.iniciarSesion}`, '_top');
+        this.usuarioservice.guardarUsuario(this.idToken, user, this.uid).subscribe();
+      });
+    }, err => {
+      if (err.error.error.message === 'EMAIL_EXISTS') {
+        Swal.fire({
+          title: 'Email ya registrado',
+          text: 'Por favor verifique el correo, o inicie sesion',
+          icon: 'error',
+        }).then(() => {
+          return;
+        });
+      }
     });
   }
   // Getters de validaciones

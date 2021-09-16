@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
@@ -17,8 +16,7 @@ export class IniciarSesionComponent implements OnInit {
   inicioSesion: FormGroup;
   constructor(private fb: FormBuilder,
               private authService: AuthService,
-              private usuariosService: UsuariosService,
-              private router: Router) {
+              private usuariosService: UsuariosService) {
     this.inicioSesion = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -35,8 +33,13 @@ export class IniciarSesionComponent implements OnInit {
       this.usuariosService.obtenerUsuario(uid).subscribe( resp2 => {
         // tslint:disable-next-line: no-string-literal
         const nombrebd = resp2['usuario']['nombre'];
+        const datosUsuario = {
+          // tslint:disable-next-line: no-string-literal
+          usuario: resp2['usuario']
+        };
         this.nombre = nombrebd;
         localStorage.setItem('nombre', nombrebd);
+        localStorage.setItem('usuario', JSON.stringify(datosUsuario));
       });
       Swal.fire({
         title: 'Bienvenido a Distribuidora Salinas',
@@ -76,8 +79,6 @@ export class IniciarSesionComponent implements OnInit {
           break;
       }
     });
-    // TODO: En la respuesta recibir el nuevo token y verificar la sesion para poder continuar y verificar la validez de sesion
-    localStorage.removeItem('uid');
   }
   iniciarSesionGoogle(){
     this.authService.iniciarConGoogle().subscribe();

@@ -5,7 +5,7 @@
 </div>
 <div class="row row-cols-1 row-cols-md-5 g-5 mt-2">
     <div class="card text-center" *ngFor="let item of productos">
-        <a [routerLink]= "['/detalles/baldes', item.id]"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
+        <a [routerLink]= "['/detalles/', item.tipo, item.id]"><img class="img-thumbnail" [src]="item.imagenes[0]"></a>
         <div class="card-body">
           <h5 class="card-title">{{item.titulo}}</h5>
           <p class="card-text">{{item.descripcion}}</p>
@@ -13,8 +13,8 @@
         <div class="card-footer text-center">
           <p class="card-text"><strong>{{ item.precio | currency }}</strong></p>
           <hr>
-          <a [routerLink]= "['/detalles/baldes', item.id]" class="btn btn-primary">Ver detalles</a>       
+          <a [routerLink]= "['/detalles/', item.tipo, item.id]" class="btn btn-primary">Ver detalles</a>       
         </div>
-      </div>
+    </div>
 </div>
 <app-footer></app-footer>

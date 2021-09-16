@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { environment } from '../../../environments/environment';
-import { CarritoService } from '../../services/carrito.service';
 import { HeladosService } from 'src/app/services/helados.service';
 import Swal from 'sweetalert2';
 
@@ -17,15 +16,16 @@ export class DetallesComponent implements OnInit {
   precio: number;
   saboresArreg: any[];
   itemsArreg = [];
+  url: string;
   public cargando = true;
   constructor(private heladosservice: HeladosService,
               private activroute: ActivatedRoute,
-              private router: Router,
-              private fb: FormBuilder,
-              private carritoservice: CarritoService) {  }
+              private fb: FormBuilder) {  }
 
   ngOnInit(): void {
     const id = this.activroute.snapshot.paramMap.get('id');
+    const tipo = this.activroute.snapshot.data;
+    this.url = `detalles/${tipo.producto}/${id}`;
     this.heladosservice.obtenerDocumentoId(`${id}`).subscribe(
       resp => {
         this.idbaldes = resp.data();
@@ -53,7 +53,8 @@ export class DetallesComponent implements OnInit {
         cantidad: this.formdet.get('cantidad').value,
         descripcion: this.formdet.get('descripcion').value,
         precio: this.formdet.get('precio').value,
-        sabor: this.formdet.get('sabor').value
+        sabor: this.formdet.get('sabor').value,
+        url: this.url
       };
       Swal.fire({
         icon: 'success',

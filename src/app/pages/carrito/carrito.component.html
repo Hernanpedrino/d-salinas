@@ -1,5 +1,5 @@
 
-<table class="table table-hover mt-3" datatable>
+<table class="table table-hover mt-3">
     <thead>
     <tr>
         <th scope="col" class="col-1">#</th>
@@ -9,6 +9,7 @@
         <th scope="col">Cantidad</th>
         <th scope="col">Sub-total</th>
         <th scope="col">Quitar Articulo</th>
+        <th scope="col">Editar Articulo</th>
     </tr>
     </thead>
     <tbody>
@@ -20,14 +21,15 @@
         <td>{{ item.cantidad }}</td>
         <td>{{ item.precio * item.cantidad | currency }}</td>
         <td class="col-1"><button  class="btn btn-danger" (click)="borrarItem(i)"><i class="fas fa-trash"></i></button></td>
+        <td class="col-1"><button  class="btn btn-success" (click)="editarItem(i)"><i class="fas fa-pen"></i></button></td>
     </tr>
     </tbody>
     <tfoot>
     <tr>
         <th scope="row" colspan="5">Total del pedido:</th>
         <td class="col-2"><strong>{{ total | currency }}</strong></td>
-        <td class="col-2"><button routerLink="/confirmar-pedido" class="btn btn-success">Confirmar Pedido <i class="fas fa-check"></i></button></td>
-        <td class="col-2"><button  class="btn btn-danger" (click)="vaciarCarrito()">Vaciar carrito <i class="fas fa-trash"></i></button></td>
+        <td class="col-2"><button class="btn btn-success" (click)="enviarCorreo()" *ngIf="pedidoEnLs">Confirmar Pedido <i class="fas fa-check"></i></button></td>
+        <td class="col-2"><button  class="btn btn-danger" (click)="vaciarCarrito()" *ngIf="pedidoEnLs">Vaciar carrito <i class="fas fa-trash"></i></button></td>
     </tr>
     </tfoot>
 </table>

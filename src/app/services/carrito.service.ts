@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import 'firebase/firestore';
+import firebase from 'firebase';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Pedidos } from '../models/pedidos.models';
+import { from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,16 @@ import { Pedidos } from '../models/pedidos.models';
 
 export class CarritoService {
   constructor(private firestore: AngularFirestore ) { }
-  
+
+  grabarPedido(uid, data){
+    const obs$ = this.firestore
+    .collection('usuarios')
+    .doc(uid)
+    .update({
+      pedidos: firebase.firestore.FieldValue.arrayUnion(data)
+    });
+    const subscription = from(obs$);
+    return subscription;
+  }
 }
-// TODO: Solucionar la forma de registrar el pedido para poder obtenerlo de mejor forma.
-// TODO: Revisar en el curso nuevo de udemy la forma de sumar los pedidos y el trabajo del carrito.
+

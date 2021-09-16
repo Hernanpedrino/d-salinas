@@ -12,6 +12,10 @@ import { OfertasComponent } from './ofertas/ofertas.component';
 import { ProductosComponent } from './productos/productos.component';
 import { ContactoComponent } from './contacto/contacto.component';
 import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
+import { PerfilComponent } from './perfil/perfil.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { EditarComponent } from './admin-page/editar/editar.component';
+import { AgregarComponent } from './admin-page/agregar/agregar.component';
 
 
 
@@ -23,7 +27,11 @@ import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.componen
     OfertasComponent,
     ProductosComponent,
     ContactoComponent,
-    IniciarSesionComponent
+    IniciarSesionComponent,
+    PerfilComponent,
+    AdminPageComponent,
+    EditarComponent,
+    AgregarComponent
   ],
   imports: [
     CommonModule,
