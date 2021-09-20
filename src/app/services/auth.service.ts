@@ -147,6 +147,17 @@ export class AuthService {
       return false;
     }
   }
+  // usuarioAdmin(): boolean {
+  //   const user = firebase.auth().currentUser;
+  //   if (user) {
+  //   // User is signed in, see docs for a list of available properties
+  //   // TODO: Verificar que el usuario sea el administrador
+  //     return true;
+  //   } else {
+  //   // No user is signed in.
+  //     return false;
+  //   }
+  // }
   logOut(){
     firebase.auth()
     .signOut()

@@ -1,24 +1,33 @@
 <h3 class="text-center mt-2">Aca podes editar todos los productos y agregar nuevos</h3>
-
-<table class="table table-hover mt-3">
+<div class="alert alert-primary text-center mt-2" *ngIf="cargando" role="alert">
+    <i class="fas fa-spinner fa-10x fa-spin"></i>
+</div>
+<table class="table table-hover align-middle mt-3">
     <thead>
     <tr>
         <th scope="col">Producto</th>
-        <th scope="col">Sabor</th>
         <th scope="col">Descripcion</th>
+        <th scope="col" class="col-2">Sabores</th>
         <th scope="col">Precio unitario</th>
         <th scope="col">Borrar Articulo</th>
         <th scope="col">Editar Articulo</th>
     </tr>
     </thead>
     <tbody>
-    <tr scope="row" *ngFor="let item of productos">
+    <tr scope="row" *ngFor="let item of productos, let i = index">
         <td>{{ item.titulo }}</td>
-        <td>{{ item.sabores }}</td>
         <td >{{ item.descripcion }}</td>
-        <td>{{ item.precio }}</td>
+        <td>{{ item.sabores }}</td>
+        <td>{{ item.precio | currency }}</td>
         <td class="col-1"><button  class="btn btn-danger"><i class="fas fa-trash"></i></button></td>
-        <td class="col-1"><button  class="btn btn-success"><i class="fas fa-pen"></i></button></td>
+        <td class="col-1"><a [routerLink]= "['/admin/editar', item.tipo, item.id, ]" class="btn btn-success"><i class="fas fa-pen"></i></a></td>
     </tr>
     </tbody>
 </table>
+
+<hr>
+<h3 class="text-center mt-2">Agregar nuevo producto</h3>
+<div class="d-grid gap-2 my-4">
+    <a routerLink="/admin/nuevo"  class="btn btn-outline-primary" type="button">Agregar nuevo producto</a>
+</div>
+<app-footer></app-footer>

@@ -43,8 +43,8 @@ export class HeladosService {
     return this.firestore.collection<Helados>('productos-sin-tacc', ref => ref.where('oferta', '==', true))
     .valueChanges();
   }
-  obtenerDocumentoId(id: string){
-    return this.firestore.collection<Helados>(`${this.tipoProdHref}`).doc(`${id}`).get();
+  obtenerDocumentoId(id: string, href: string){
+    return this.firestore.collection<Helados>(`${this.tipoProdHref = href}`).doc(`${id}`).get();
   }
   obtenerBaldesFb(){
     return this.firestore.collection<Helados>('baldes').valueChanges();

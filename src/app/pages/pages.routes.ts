@@ -9,7 +9,9 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { IniciarSesionComponent } from './iniciar-sesion/iniciar-sesion.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
-// Guards 
+import { EditarComponent } from './admin-page/editar/editar.component';
+import { AgregarComponent } from './admin-page/agregar/agregar.component';
+// Guards
 import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
@@ -27,6 +29,8 @@ const routes: Routes = [
     { path: 'detalles/productos-sin-tacc/:id', component: DetallesComponent, data: {producto: 'productos-sin-tacc'} },
     { path: 'detalles/golosinas-heladas/:id', component: DetallesComponent, data: {producto: 'golosinas-heladas'} },
     { path: 'admin', component: AdminPageComponent },
+    { path: 'admin/editar/:tipoProd/:id', component: EditarComponent },
+    { path: 'admin/nuevo', component: AgregarComponent },
 ];
 
 @NgModule({

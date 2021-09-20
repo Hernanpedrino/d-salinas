@@ -15,6 +15,7 @@ export class AdminPageComponent implements OnInit {
   golosinas: Helados[] = [];
   tacc: Helados[] = [];
   productos: Helados[] = [];
+  cargando = true;
   constructor(private heladosservice: HeladosService) { }
 
   ngOnInit(): void {
@@ -31,11 +32,9 @@ export class AdminPageComponent implements OnInit {
       this.tacc = tacc;
       const productos = this.baldes.concat(this.golosinas, this.postres, this.tacc);
       this.productos = productos;
-      console.log(this.productos);
-      
+      this.cargando = false;
     }, (error) => {
       console.log(error);
     });
   }
-
 }

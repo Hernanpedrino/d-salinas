@@ -1,1 +1,61 @@
-<p>editar works!</p>
+<div class="row mt-2">
+    <!-- <div class="alert alert-primary text-center" *ngIf="cargando" role="alert">
+      <i class="fas fa-spinner fa-10x fa-spin"></i>
+    </div> -->
+    <div class="row">
+      <div class="col" >
+        <form [formGroup]="formEditar">
+          <label for="formGroupExampleInput" class="form-label"><h3>Nombre del producto:</h3></label>
+          <input type="text" class="form-control" formControlName="nombre" placeholder="">
+          <label for="formGroupExampleInput" class="form-label mt-2"><h3>Descripcion:</h3></label>
+          <textarea class="form-control" aria-label="Descripcion" formControlName="descripcion"></textarea>
+          <div class="col-md-6">
+            <label for="formGroupExampleInput" class="form-label mt-2"><h3>Precio:</h3></label>
+            <input type="text" class="form-control" placeholder="" formControlName="precio">
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6">
+                <label for="sabores"><h3>Sabores:</h3></label>
+                <select class="form-select mb-1" aria-label="Default select example" *ngIf="nuevoSabor" formControlName="sabor">
+                  <option selected>Cantidad de sabores a cargar:</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <!-- <div class="row mb-2">
+                    <div class="col">
+                      <input type="text" class="form-control">
+                    </div>
+                    <div class="col">
+                      <input type="text" class="form-control">
+                    </div>
+                </div> -->
+                <div class="row mb-1">
+                  <div class="col">
+                    <button class="btn btn-primary" type="button" (click)="agregarSabor()">Agregar nuevo sabor &nbsp;&nbsp;<i class="fas fa-plus"></i></button>
+                  </div>
+                </div>
+                <div class="row mb-1">
+                  <div class="col">
+                    <label for="formFile" class="form-label"><h3>Subir imagen</h3></label>
+                    <input class="form-control" type="file" id="formFile" formControlName="imagen">
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="row m-2">
+            <button class="btn btn-primary" type="submit">Guardar Cambios &nbsp;&nbsp;<i class="fas fa-pen"></i></button>
+          </div> 
+        </form>
+      </div>
+    </div>
+</div>

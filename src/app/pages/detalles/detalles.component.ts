@@ -26,7 +26,7 @@ export class DetallesComponent implements OnInit {
     const id = this.activroute.snapshot.paramMap.get('id');
     const tipo = this.activroute.snapshot.data;
     this.url = `detalles/${tipo.producto}/${id}`;
-    this.heladosservice.obtenerDocumentoId(`${id}`).subscribe(
+    this.heladosservice.obtenerDocumentoId(`${id}`, `${tipo.producto}`).subscribe(
       resp => {
         this.idbaldes = resp.data();
         this.precio = resp.data().precio;
